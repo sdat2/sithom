@@ -26,7 +26,7 @@ def time_limit(seconds: int) -> None:
         Call a function which will take longer than the time limit::
 
             import time
-            from src.utils import time_limit, TimeoutException
+            from sithom.utils import time_limit, TimeoutException
 
             def long_function_call():
                 for t in range(5):
@@ -81,7 +81,7 @@ def hr_time(time_in: float) -> str:
     Example:
         120 seconds to human readable string::
 
-            >>> from src.utils import hr_time
+            >>> from sithom.utils import hr_time
             >>> hr_time(120)
                 "2 min 0 s"
     """
@@ -96,7 +96,7 @@ def hr_time(time_in: float) -> str:
 
 
 def timeit(method: Callable) -> Callable:
-    """`src.timeit` is a wrapper for performance analysis.
+    """`sithom.timeit` is a wrapper for performance analysis.
 
     It should return the time taken for a function to run. Alters `log_time` `dict`
     if fed in. Add @timeit to the function you want to time. Function needs
@@ -108,7 +108,7 @@ def timeit(method: Callable) -> Callable:
     Examples:
         Here is an example with the tracking functionality and without::
 
-            >>> from src.utils import timeit
+            >>> from sithom.utils import timeit
             >>> @timeit
             ... def loop(**kwargs):
             ...     total = 0

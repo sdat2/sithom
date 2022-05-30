@@ -5,13 +5,13 @@ from sys import getsizeof
 
 def in_notebook() -> bool:
     """
-    Check if in notebook.
+    Check if in jupyter notebook.
 
     Taken from this answer:
     https://stackoverflow.com/a/22424821
 
     Returns:
-        bool: whether in notebook.
+        bool: whether in jupyter notebook.
     """
     try:
         # pylint: disable=import-outside-toplevel

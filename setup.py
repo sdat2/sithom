@@ -8,7 +8,7 @@ NAME = "sithom"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-PACKAGES = ["seaborn", "jupyterthemes", "cmocean", "matplotlib", "xarray", "uncertainties"]
+REQUIRED = ["matplotlib", "seaborn", "jupyterthemes", "cmocean", "xarray", "uncertainties"]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -29,6 +29,7 @@ setup(
     url="https://github.com/sdat2/sithom",
     packages=find_packages(where=NAME),
     include_package_data=True,
+    install_requires=REQUIRED,
     license="MIT",
     # test_suite="src.tests.test_all.suite",
     # setup_requires=["pytest-runner"],

@@ -6,7 +6,7 @@ consistent and easy to produce plots across the project.
 Example:
     Usage with simple plots::
 
-        from src.plot_utils import (
+        from sithom.plot import (
             plot_defaults,
             label_subplots,
             get_dim,
@@ -53,7 +53,7 @@ from sithom.misc import in_notebook
 
 
 REPORT_WIDTH: float = 398.3386  # in pixels
-# Constants from SVM (could move to src.constants)
+# Constants from SVM
 # Standard color list
 STD_CLR_LIST = [
     "#4d2923ff",
@@ -80,8 +80,6 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
     Can enable `matplotlib` LaTeX backend if it is available.
 
     Uses serif font to fit into latex report.
-    Uses REPORT_WIDTH from `src.constants`.
-
 
     Args:
         use_tex (bool, optional): Whether or not to use latex matplotlib backend.
@@ -93,7 +91,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
     Examples:
         Basic setting for the plotting defaults::
 
-            >>> from src.plot_utils import plot_defaults
+            >>> from sithom.plot import plot_defaults
             >>> plot_defaults()
 
     """
@@ -141,7 +139,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
         # "font.monospace": [],
         "figure.figsize": get_dim(),
         "lines.linewidth": 1.0,
-        "scatter.marker": "x",
+        "scatter.marker": "X",
         "image.cmap": "viridis",
     }
     matplotlib.rcParams.update(p_general)
@@ -195,7 +193,7 @@ def label_subplots(
     Example:
         Here is an example of using this function::
 
-            >>> from src.plot_utis import label_subplots
+            >>> from sithom.plot_utis import label_subplots
             >>> label_subplots(axs, start_from=0, fontsize=10)
 
     """
@@ -234,12 +232,12 @@ def get_dim(
 ) -> Tuple[float, float]:
     """Return figure height, width in inches to avoid scaling in latex.
 
-    Default width is `src.constants.REPORT_WIDTH`.
+    Default width is `sithom.constants.REPORT_WIDTH`.
     Default ratio is golden ratio, with figure occupying full page width.
 
     Args:
         width (float, optional): Textwidth of the report to make fontsizes match.
-            Defaults to `src.constants.REPORT_WIDTH`.
+            Defaults to `sithom.constants.REPORT_WIDTH`.
         fraction_of_line_width (float, optional): Fraction of the document width
             which you wish the figure to occupy.  Defaults to 1.
         ratio (float, optional): Fraction of figure width that the figure height
@@ -252,7 +250,7 @@ def get_dim(
     Example:
         Here is an example of using this function::
 
-            >>> from src.plot_utils import get_dim
+            >>> from sithom.plot import get_dim
             >>> dim_tuple = get_dim(fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
 
     """
@@ -279,13 +277,13 @@ def set_dim(
 ) -> None:
     """Set aesthetic figure dimensions to avoid scaling in latex.
 
-    Default width is `src.constants.REPORT_WIDTH`.
+    Default width is `sithom.constants.REPORT_WIDTH`.
     Default ratio is golden ratio, with figure occupying full page width.
 
     Args:
         fig (matplotlib.figure.Figure): Figure object to resize.
         width (float): Textwidth of the report to make fontsizes match.
-            Defaults to `src.constants.REPORT_WIDTH`.
+            Defaults to `sithom.constants.REPORT_WIDTH`.
         fraction_of_line_width (float, optional): Fraction of the document width
             which you wish the figure to occupy.  Defaults to 1.
         ratio (float, optional): Fraction of figure width that the figure height
@@ -297,7 +295,7 @@ def set_dim(
     Example:
         Here is an example of using this function::
 
-            >>> from src.plot_utils import set_dim
+            >>> from sithom.plot import set_dim
             >>> set_dim(fig, fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
 
     """
@@ -325,7 +323,7 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
     Example:
         Usage example for sea surface temperature::
 
-            from src.plot_utils import cmap
+            from sithom.plot import cmap
             cmap_t = cmap("sst")
 
     """
@@ -384,7 +382,7 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
         Using with xarray::
 
             import xarray as xr
-            from src.plot_utils import axis_formatter
+            from sithom.plot import axis_formatter
             da = xr.tutorial.open_dataset("air_temperature").air
             da.isel(time=0).plot(cbar_kwargs={"format": axis_formatter()})
 
