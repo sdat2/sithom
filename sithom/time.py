@@ -1,9 +1,7 @@
 """Time utility functions."""
 from typing import Callable
-import inspect
 import time
 from functools import wraps
-from sys import getsizeof
 import signal
 from contextlib import contextmanager
 

@@ -41,12 +41,11 @@ Example:
 
 """
 from typing import Sequence, Tuple, Union, Optional, Literal
-import numpy as np
 from sys import platform
 import itertools
+import numpy as np
 from distutils.spawn import find_executable
 import matplotlib
-import xarray as xr
 import seaborn as sns
 from jupyterthemes import jtplot
 import cmocean
@@ -366,37 +365,6 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
     cmap_t.set_bad(color="#15b01a")
 
     return cmap_t
-
-
-def add_units(
-    xr_obj: Union[xr.DataArray, xr.Dataset], x_dim: str = "X", y_dim: str = "Y"
-) -> Union[xr.DataArray, xr.Dataset]:
-    """
-    Adding good units to make axes plottable.
-
-    Currently only for lat, lon axes, but could be improved to
-    add degrees celsius and so on.
-
-    Fails softly.
-
-    Args:
-        xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/datset
-            (potentially with units for axes).
-        x_dim (str): Defaults to "X"
-        y_dim (str): Defaults to "Y"
-
-    Returns:
-        Union[xr.DataArray, xr.Dataset]: Datarray/Dataset with correct
-            units/names for plotting. Assuming that you've given the
-            correct x_dim and y_dim for the object.
-    """
-    if x_dim in xr_obj.coords:
-        xr_obj.coords[x_dim].attrs["units"] = r"$^{\circ}$E"
-        xr_obj.coords[x_dim].attrs["long_name"] = "Longitude"
-    if y_dim in xr_obj.coords:
-        xr_obj.coords[y_dim].attrs["units"] = r"$^{\circ}$N"
-        xr_obj.coords[y_dim].attrs["long_name"] = "Latitude"
-    return xr_obj
 
 
 def axis_formatter() -> matplotlib.ticker.ScalarFormatter:

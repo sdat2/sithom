@@ -1,9 +1,10 @@
 """Xarray utils."""
+from typing import Union
 import numpy as np
 import xarray as xr
 
 
-def spatial_mean(da: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") -> xr.DataArray:
+def spatial_mean(dataarray: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") -> xr.DataArray:
     # pylint: disable=anomalous-backslash-in-string
     """
     Average a datarray over "X" and "Y" coordinates.
@@ -31,7 +32,7 @@ def spatial_mean(da: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") -> xr.Dat
             \\bar{T}_{\\text {month }}=\\frac{\\sum_{j=1}^{n L a t}
             \\cos \\left(\\text { lat }_{j}\\right)
             \\bar{T}_{\\text {lat }, j}}{\\sum_{j=1}^{\\text{n \\text{Lat} }}
-            \\cos \\left(\\text { lat }_{j}\\right)}
+            \\cos \\left(\\text{ lat }_{j}\\right)}
         \\end{equation}
 
     Args:
@@ -43,15 +44,46 @@ def spatial_mean(da: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") -> xr.Dat
         xr.DataArray: Avarage of da.
     """
     # Find mean temperature for each latitude
-    mean_sst_lat = da.mean(dim="X")
+    mean_sst_lat = dataarray.mean(dim=x_dim)
 
     # Find Weighted mean of those values
     # https://numpy.org/doc/stable/reference/generated/numpy.cos.html
     # https://numpy.org/doc/stable/reference/generated/numpy.radians.html
-    num = (np.cos(np.radians(da.Y)) * mean_sst_lat).sum(dim="Y")
-    denom = np.sum(np.cos(np.radians(da.Y)))
+    num = (np.cos(np.radians(dataarray[y_dim])) * mean_sst_lat).sum(dim=y_dim)
+    denom = np.sum(np.cos(np.radians(dataarray[y_dim])))
 
     # Find mean global temperature
     mean_temp = num / denom
 
     return mean_temp
+
+
+def plottable_units(
+    xr_obj: Union[xr.DataArray, xr.Dataset], x_dim: str = "X", y_dim: str = "Y"
+) -> Union[xr.DataArray, xr.Dataset]:
+    """
+    Adding good units to make axes plottable.
+
+    Currently only for lat, lon axes, but could be improved to
+    add degrees celsius and so on.
+
+    Fails softly.
+
+    Args:
+        xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/datset
+            (potentially with units for axes).
+        x_dim (str): Defaults to "X"
+        y_dim (str): Defaults to "Y"
+
+    Returns:
+        Union[xr.DataArray, xr.Dataset]: Datarray/Dataset with correct
+            units/names for plotting. Assuming that you've given the
+            correct x_dim and y_dim for the object.
+    """
+    if x_dim in xr_obj.coords:
+        xr_obj.coords[x_dim].attrs["units"] = r"$^{\circ}$E"
+        xr_obj.coords[x_dim].attrs["long_name"] = "Longitude"
+    if y_dim in xr_obj.coords:
+        xr_obj.coords[y_dim].attrs["units"] = r"$^{\circ}$N"
+        xr_obj.coords[y_dim].attrs["long_name"] = "Latitude"
+    return xr_obj
