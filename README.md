@@ -1,4 +1,4 @@
-# sithom
+# sithom README
 
 A package for shared utility scripts that I use in my research projects.
 
