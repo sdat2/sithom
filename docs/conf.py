@@ -108,7 +108,7 @@ html_theme_options = {
 html_context = {
     "display_github": True,
     "github_user": "sdat2",
-    "github_repo": "seager19",
+    "github_repo": "sithom",
     "github_version": "main/docs/",
 }
 
@@ -119,10 +119,3 @@ latex_elements = {
     "extraclassoptions": "openany,oneside",
     "papersize": "a4paper",
 }
-
-# update the language totals
-try:
-    os.system("cd .. \n cloc --report-file=docs/lang.txt $(git ls-files)")
-# pylint: disable=broad-except
-except:
-    print("could not update language totals")
