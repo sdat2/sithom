@@ -27,14 +27,14 @@ def spatial_mean(
 
         \\begin{equation}
             \\bar{T}_{\\text{Lat }}=\\frac{1}{n \\text{ Lon }}
-            \\sum_{i=1}^{n \\text{Lon}} T_{\\text \\text{Lon},\\; i}
+            \\sum_{i=1}^{n \\text{Lon}} T_{ \\text{Lon}, \\; i}
         \\end{equation}
 
         \\begin{equation}
-            \\bar{T}_{\\text {month }}=\\frac{\\sum_{j=1}^{n \\text{ Lat }}
-            \\cos \\left(\\text { Lat }_{j}\\right)
-            \\bar{T}_{\\text{lat },\\; j}}{\\sum_{j=1}^{\\text{n \\text{ Lat } }}
-            \\cos \\left(\\text{ Lat }_{j}\\right)}
+            \\bar{T}_{\\text{ month }}=\\frac{\\sum_{j=1}^{n \\text{ Lat}}
+            \\cos \\left(\\text{ Lat }_{j} \\right)
+            \\bar{T}_{\\text{ Lat },\\; j}}{\\sum_{j=1}^{\\text{nLat}}}
+            \\cos \\left( \\text{ Lat }_{j} \\right)}
         \\end{equation}
 
     Args:
