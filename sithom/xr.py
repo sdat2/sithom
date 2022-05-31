@@ -32,9 +32,9 @@ def spatial_mean(
 
         \\begin{equation}
             \\bar{T}_{\\text {month }}=\\frac{\\sum_{j=1}^{n \\text{ Lat }}
-            \\cos \\left(\\text { lat }_{j}\\right)
+            \\cos \\left(\\text { Lat }_{j}\\right)
             \\bar{T}_{\\text{lat },\\; j}}{\\sum_{j=1}^{\\text{n \\text{ Lat } }}
-            \\cos \\left(\\text{ lat }_{j}\\right)}
+            \\cos \\left(\\text{ Lat }_{j}\\right)}
         \\end{equation}
 
     Args:
@@ -69,7 +69,31 @@ def spatial_mean(
     return mean_temp
 
 
-def plottable_units(
+def _latexify(input: str) -> str:
+    """
+    Latexify the units.
+
+    Args:
+        input (str): input string.
+
+    Returns:
+        str: latexed output string.
+    """
+    output = ""
+    for x in input.split(" "):
+        if "**" in x:
+            y, z = x.split("**")
+            output += y+"$^{"+ z +"}$"
+        else:
+            output += x
+        output += " "
+    output.strip(" ")
+    if "degree_Celsius" in input:
+        output.replace("degree_Celsius","$^{\circ}$C")
+    return output
+
+
+def plot_units(
     xr_obj: Union[xr.DataArray, xr.Dataset],
     x_dim: str = "longitude",
     y_dim: str = "latitude",
@@ -99,4 +123,11 @@ def plottable_units(
     if y_dim in xr_obj.coords:
         xr_obj.coords[y_dim].attrs["units"] = r"$^{\circ}$N"
         xr_obj.coords[y_dim].attrs["long_name"] = "Latitude"
+
+    if isinstance(xr_obj, xr.Dataset):
+        for var in xr_obj:
+            xr_obj[var].attrs["units"] = _latexify(xr_obj[var].attrs["units"])
+    elif isinstance(xr_obj, xr.DataArray):
+        xr_obj.attrs["units"] = _latexify(xr_obj.attrs["units"])
+
     return xr_obj

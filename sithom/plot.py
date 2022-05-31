@@ -40,7 +40,7 @@ Example:
         label_subplots(axs, start_from=0, fontsize=10)
 
 """
-from typing import Sequence, Tuple, Union, Optional, Literal
+from typing import Sequence, Tuple, Optional, Literal
 from sys import platform
 import itertools
 import numpy as np
