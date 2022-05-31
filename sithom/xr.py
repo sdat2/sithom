@@ -26,8 +26,8 @@ def spatial_mean(
         :nowrap:
 
         \\begin{equation}
-            \\bar{T}_{\\text{Lat }}=\\frac{1}{n \\text{ Lon }}
-            \\sum_{i=1}^{n \\text{Lon}} T_{ \\text{Lon}, \\; i}
+            \\bar{T}_{\\text{Lat }}=\\frac{1}{\\text{nLon }}
+            \\sum_{i=1}^{\\text{nLon}} T_{ \\text{Lon}, \\; i}
         \\end{equation}
 
         \\begin{equation}
