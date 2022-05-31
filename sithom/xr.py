@@ -4,7 +4,9 @@ import numpy as np
 import xarray as xr
 
 
-def spatial_mean(dataarray: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") -> xr.DataArray:
+def spatial_mean(
+    dataarray: xr.DataArray, x_dim: str = "longitude", y_dim: str = "latitude"
+) -> xr.DataArray:
     # pylint: disable=anomalous-backslash-in-string
     """
     Average a datarray over "X" and "Y" coordinates.
@@ -37,11 +39,20 @@ def spatial_mean(dataarray: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") ->
 
     Args:
         da (xr.DataArray): da to average.
-        x_dim: The longitude dimension name. Defaults to "X".
-        y_dim: The latitude dimension name. Defaults to "Y".
+        x_dim: The longitude dimension name. Defaults to "longitude".
+        y_dim: The latitude dimension name. Defaults to "latitude".
 
     Returns:
         xr.DataArray: Avarage of da.
+
+    Example of calculating and plotting mean timeseries of dataarray::
+
+        import xarray as xr
+        from sithom.xr import spatial_mean
+        da = xr.tutorial.open_dataset("air_temperature").air
+        timeseries_mean = spatial_mean(da)
+        timeseries_mean.plot.line()
+
     """
     # Find mean temperature for each latitude
     mean_sst_lat = dataarray.mean(dim=x_dim)
@@ -59,7 +70,9 @@ def spatial_mean(dataarray: xr.DataArray, x_dim: str = "X", y_dim: str = "Y") ->
 
 
 def plottable_units(
-    xr_obj: Union[xr.DataArray, xr.Dataset], x_dim: str = "X", y_dim: str = "Y"
+    xr_obj: Union[xr.DataArray, xr.Dataset],
+    x_dim: str = "longitude",
+    y_dim: str = "latitude",
 ) -> Union[xr.DataArray, xr.Dataset]:
     """
     Adding good units to make axes plottable.
@@ -72,8 +85,8 @@ def plottable_units(
     Args:
         xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/datset
             (potentially with units for axes).
-        x_dim (str): Defaults to "X"
-        y_dim (str): Defaults to "Y"
+        x_dim (str): Defaults to "longitude"
+        y_dim (str): Defaults to "latitude"
 
     Returns:
         Union[xr.DataArray, xr.Dataset]: Datarray/Dataset with correct

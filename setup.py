@@ -8,7 +8,14 @@ NAME = "sithom"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-REQUIRED = ["matplotlib", "seaborn", "jupyterthemes", "cmocean", "xarray", "uncertainties"]
+REQUIRED = [
+    "matplotlib",
+    "seaborn",
+    "jupyterthemes",
+    "cmocean",
+    "xarray",
+    "uncertainties",
+]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,19 +28,19 @@ with open(os.path.join(here, NAME, "_version.py")) as f:
 setup(
     name=NAME,
     version=about["__version__"],
-    author="Simon Thomas",
+    author=about["__author__"],
     author_email="sdat2@cam.ac.uk",
     description="General utility scripts",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/sdat2/sithom",
+    url=str("https://github.com/sdat2/" + NAME),
     packages=find_packages(where=NAME),
     include_package_data=True,
     install_requires=REQUIRED,
     license="MIT",
-    # test_suite="src.tests.test_all.suite",
+    # test_suite=str(NAME +".tests.test_all.suite"),
     # setup_requires=["pytest-runner"],
-    # package_dir={"": "sithom"},
+    # package_dir={"": NAME},
     tests_require=["pytest"],
     classifiers=[
         "Development Status :: 3 - Alpha",
