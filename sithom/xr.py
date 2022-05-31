@@ -31,10 +31,16 @@ def spatial_mean(
         \\end{equation}
 
         \\begin{equation}
-            \\bar{T}_{\\text{ month }}=\\frac{\\sum_{j=1}^{n \\text{ Lat}}
+            \\bar{T}_{\\text{ month }}=
+            \\frac{
+            \\sum_{j=1}^{\\text{nLat} } 
             \\cos \\left(\\text{ Lat }_{j} \\right)
-            \\bar{T}_{\\text{ Lat },\\; j}}{\\sum_{j=1}^{\\text{nLat}}}
-            \\cos \\left( \\text{ Lat }_{j} \\right)}
+            \\bar{T}_{\\text{ Lat }, \\; j}
+            }
+            {
+            \\sum_{j=1}^{\\text{nLat} } 
+            \\cos \\left( \\text{ Lat }_{j} \\right)
+            }
         \\end{equation}
 
     Args:
