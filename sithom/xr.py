@@ -9,7 +9,7 @@ def spatial_mean(
 ) -> xr.DataArray:
     # pylint: disable=anomalous-backslash-in-string
     """
-    Average a datarray over "X" and "Y" coordinates.
+    Average a datarray over "longitude" and "latitude" coordinates.
 
     Spatially weighted.
 
@@ -26,14 +26,14 @@ def spatial_mean(
         :nowrap:
 
         \\begin{equation}
-            \\bar{T}_{\\text {lat }}=\\frac{1}{n \\text{ Lon }}
-            \\sum_{i=1}^{n \\text{Lon}} T_{\\text \\text{lon}, i}
+            \\bar{T}_{\\text{Lat }}=\\frac{1}{n \\text{ Lon }}
+            \\sum_{i=1}^{n \\text{Lon}} T_{\\text \\text{Lon},\\; i}
         \\end{equation}
 
         \\begin{equation}
-            \\bar{T}_{\\text {month }}=\\frac{\\sum_{j=1}^{n L a t}
+            \\bar{T}_{\\text {month }}=\\frac{\\sum_{j=1}^{n \\text{ Lat }}
             \\cos \\left(\\text { lat }_{j}\\right)
-            \\bar{T}_{\\text {lat }, j}}{\\sum_{j=1}^{\\text{n \\text{Lat} }}
+            \\bar{T}_{\\text{lat },\\; j}}{\\sum_{j=1}^{\\text{n \\text{ Lat } }}
             \\cos \\left(\\text{ lat }_{j}\\right)}
         \\end{equation}
 
