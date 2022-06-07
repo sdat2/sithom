@@ -1,4 +1,4 @@
-"""Time utility functions."""
+"""Time Utilities Module."""
 from typing import Callable
 import time
 from functools import wraps

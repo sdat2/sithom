@@ -1,4 +1,4 @@
-"""Miscillanious Utility functions."""
+"""Miscillanious Utilities Module."""
 import inspect
 from sys import getsizeof
 

@@ -1,4 +1,4 @@
-"""Xarray utils."""
+"""Xarray Utilities Module."""
 from typing import Union
 import numpy as np
 import xarray as xr
@@ -105,7 +105,7 @@ def plot_units(
     y_dim: str = "latitude",
 ) -> Union[xr.DataArray, xr.Dataset]:
     """
-    Adding good units to make axes plottable.
+    Adding good latex units to make the xarray object plottable.
 
     Currently only for lat, lon axes, but could be improved to
     add degrees celsius and so on.

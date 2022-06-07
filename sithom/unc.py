@@ -1,4 +1,4 @@
-"""Uncertainties utils."""
+"""Uncertainties Utilities Module."""
 import numpy as np
 import matplotlib
 from uncertainties import ufloat
