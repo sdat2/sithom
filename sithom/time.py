@@ -26,7 +26,7 @@ def time_limit(seconds: int) -> None:
         Call a function which will take longer than the time limit::
 
             import time
-            from sithom.utils import time_limit, TimeoutException
+            from sithom.time import time_limit, TimeoutException
 
             def long_function_call():
                 for t in range(5):
@@ -81,9 +81,9 @@ def hr_time(time_in: float) -> str:
     Example:
         120 seconds to human readable string::
 
-            >>> from sithom.utils import hr_time
+            >>> from sithom.time import hr_time
             >>> hr_time(120)
-                "2 min 0 s"
+                '02 min 00 s'
     """
     if time_in < 60:
         return "%2.5f s" % time_in
@@ -108,7 +108,7 @@ def timeit(method: Callable) -> Callable:
     Examples:
         Here is an example with the tracking functionality and without::
 
-            >>> from sithom.utils import timeit
+            >>> from sithom.time import timeit
             >>> @timeit
             ... def loop(**kwargs):
             ...     total = 0
@@ -119,6 +119,7 @@ def timeit(method: Callable) -> Callable:
             >>> loop(log_time=tmp_log_d)
             >>> print(tmp_log_d["loop"])
             >>> loop()
+                "'loop'  0.04346 s "
 
     """
 

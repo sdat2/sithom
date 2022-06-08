@@ -193,7 +193,9 @@ def label_subplots(
     Example:
         Here is an example of using this function::
 
-            >>> from sithom.plot_utis import label_subplots
+            >>> import matplotlib.pyplot as plt
+            >>> from sithom.plot import label_subplots
+            >>> fig, axs = plt.subplots(2, 2)
             >>> label_subplots(axs, start_from=0, fontsize=10)
 
     """
@@ -252,6 +254,7 @@ def get_dim(
 
             >>> from sithom.plot import get_dim
             >>> dim_tuple = get_dim(fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
+            >>> print("({:.2f}, {:.2f})" % dim_tuple)
 
     """
 
@@ -295,7 +298,9 @@ def set_dim(
     Example:
         Here is an example of using this function::
 
+            >>> import matplotlib.pyplot as plt
             >>> from sithom.plot import set_dim
+            >>> fig, ax = plt.subplots(1, 1)
             >>> set_dim(fig, fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
 
     """
@@ -369,10 +374,11 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
     """Returns axis formatter for scientific notation.
 
         Returns an object that does the equivalent of:
-
+            
+            >>> import matplotlib.pyplot as plt
             >>> plt.gca().ticklabel_format(
-            >>>    axis=ax_format, style="sci", scilimits=(0, 0), useMathText=True
-            >>> )
+            ...    axis=ax_format, style="sci", scilimits=(0, 0), useMathText=True
+            ... )
 
         Returns:
             matplotlib.ticker.ScalarFormatter: An object to pass in to a
