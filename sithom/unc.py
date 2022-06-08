@@ -4,18 +4,18 @@ import matplotlib
 from uncertainties import ufloat
 
 
-def tex_ufloat_input(
+def tex_uf(
     ufloat_input: ufloat,
     bracket: bool = False,
     force_latex: bool = False,
     exponential: bool = True,
 ) -> str:
     """
-    A function to take an uncertainties.ufloat_inputloat, and return a tex containing string
+    A function to take an uncertainties.ufloat, and return a tex containing string
     for plotting, which has the right number of decimal places.
 
     Args:
-        ufloat_input (ufloat_inputloat): The uncertainties ufloat_inputloat object.
+        ufloat_input (ufloat): The uncertainties ufloat object.
         bracket (bool, optional): Whether or not to add latex brackets around
             the parameter. Defaults to False.
         force_latex (bool, optional): Whether to force latex output.
@@ -35,7 +35,9 @@ def tex_ufloat_input(
     # check if Latex is engaged
     if matplotlib.rcParams["text.usetex"] is True or force_latex:
         if bracket:
-            format_string = "$\\left( {:." + str(decimal_point) + exponential_str + "L} \\right)$"
+            format_string = (
+                "$\\left( {:." + str(decimal_point) + exponential_str + "L} \\right)$"
+            )
         else:
             format_string = "${:." + str(decimal_point) + exponential_str + "L}$"
     else:

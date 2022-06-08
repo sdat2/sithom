@@ -85,13 +85,13 @@ def hr_time(time_in: float) -> str:
                 '02 min 00 s'
     """
     if time_in < 60:
-        output_str =  "%2.5f s" % time_in
+        output_str = "%2.5f s" % time_in
     elif 60 < time_in < 60 * 60:
-        output_str =  time.strftime("%M min %S s", time.gmtime(time_in))
+        output_str = time.strftime("%M min %S s", time.gmtime(time_in))
     elif 60 * 60 < time_in < 24 * 60 * 60:
-        output_str =  time.strftime("%H hr %M min %S s", time.gmtime(time_in))
+        output_str = time.strftime("%H hr %M min %S s", time.gmtime(time_in))
     else:
-        output_str =  "%2.5f s" % time_in
+        output_str = "%2.5f s" % time_in
     return output_str
 
 
