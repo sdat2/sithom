@@ -374,17 +374,9 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
 def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
     """Returns axis formatter for scientific notation.
 
-        Returns an object that does the equivalent of:
-            
-            >>> import matplotlib.pyplot as plt
-            >>> fig, ax_format = plt.subplots(1, 1)
-            >>> plt.gca().ticklabel_format(
-            ...    axis=ax_format, style="sci", scilimits=(0, 0), useMathText=True
-            ... )
-
         Returns:
             matplotlib.ticker.ScalarFormatter: An object to pass in to a
-                matplotlib operation.
+            matplotlib operation.
 
     Examples:
         Using with xarray::
