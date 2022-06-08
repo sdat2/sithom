@@ -254,7 +254,8 @@ def get_dim(
 
             >>> from sithom.plot import get_dim
             >>> dim_tuple = get_dim(fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
-            >>> print("({:.2f}, {:.2f})" % (dim_tuple[0], dim_tuple[1]))
+            >>> print("({:.2f},".format(dim_tuple[0]), "{:.2f})".format(dim_tuple[1]))
+            (5.51, 3.41)
 
     """
 
@@ -376,6 +377,7 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
         Returns an object that does the equivalent of:
             
             >>> import matplotlib.pyplot as plt
+            >>> fig, ax_format = plt.subplots(1, 1)
             >>> plt.gca().ticklabel_format(
             ...    axis=ax_format, style="sci", scilimits=(0, 0), useMathText=True
             ... )
