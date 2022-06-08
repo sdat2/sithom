@@ -376,7 +376,7 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
 
         Returns:
             matplotlib.ticker.ScalarFormatter: An object to pass in to a
-            matplotlib operation.
+                matplotlib operation.
 
     Examples:
         Using with xarray::
