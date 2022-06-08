@@ -4,18 +4,18 @@ import matplotlib
 from uncertainties import ufloat
 
 
-def tex_uf(
-    uf: ufloat,
+def tex_ufloat_input(
+    ufloat_input: ufloat,
     bracket: bool = False,
     force_latex: bool = False,
     exponential: bool = True,
 ) -> str:
     """
-    A function to take an uncertainties.ufloat, and return a tex containing string
+    A function to take an uncertainties.ufloat_inputloat, and return a tex containing string
     for plotting, which has the right number of decimal places.
 
     Args:
-        uf (ufloat): The uncertainties ufloat object.
+        ufloat_input (ufloat_inputloat): The uncertainties ufloat_inputloat object.
         bracket (bool, optional): Whether or not to add latex brackets around
             the parameter. Defaults to False.
         force_latex (bool, optional): Whether to force latex output.
@@ -28,19 +28,19 @@ def tex_uf(
         str: String ready to be added to a graph label.
     """
     if exponential:
-        e_str = "e"
+        exponential_str = "e"
     else:
-        e_str = ""
-    dp = round(np.log10(abs(uf.n)) - np.log10(abs(uf.s)))
+        exponential_str = ""
+    decimal_point = round(np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s)))
     # check if Latex is engaged
     if matplotlib.rcParams["text.usetex"] is True or force_latex:
         if bracket:
-            fs = "$\\left( {:." + str(dp) + e_str + "L} \\right)$"
+            format_string = "$\\left( {:." + str(decimal_point) + exponential_str + "L} \\right)$"
         else:
-            fs = "${:." + str(dp) + e_str + "L}$"
+            format_string = "${:." + str(decimal_point) + exponential_str + "L}$"
     else:
         if bracket:
-            fs = "({:." + str(dp) + e_str + "P})"
+            format_string = "({:." + str(decimal_point) + exponential_str + "P})"
         else:
-            fs = "{:." + str(dp) + e_str + "P}"
-    return fs.format(uf)
+            format_string = "{:." + str(decimal_point) + exponential_str + "P}"
+    return format_string.format(ufloat_input)

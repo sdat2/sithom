@@ -83,8 +83,8 @@ def calculate_byte_size_recursively(obj: object, seen: set = None) -> int:
         # handles class objects
         for cls in obj.__class__.__mro__:
             if "__dict__" in cls.__dict__:
-                d = cls.__dict__["__dict__"]
-                if inspect.isgetsetdescriptor(d) or inspect.ismemberdescriptor(d):
+                dictionary = cls.__dict__["__dict__"]
+                if inspect.isgetsetdescriptor(dictionary) or inspect.ismemberdescriptor(dictionary):
                     # Recursively calculate size of member objects & variables
                     size += calculate_byte_size_recursively(obj.__dict__, seen)
                 break

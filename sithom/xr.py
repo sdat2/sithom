@@ -33,12 +33,12 @@ def spatial_mean(
         \\begin{equation}
             \\bar{T}_{\\text{ month }}=
             \\frac{
-            \\sum_{j=1}^{\\text{nLat} } 
+            \\sum_{j=1}^{\\text{nLat} }
             \\cos \\left(\\text{ Lat }_{j} \\right)
             \\bar{T}_{\\text{ Lat }, \\; j}
             }
             {
-            \\sum_{j=1}^{\\text{nLat} } 
+            \\sum_{j=1}^{\\text{nLat} }
             \\cos \\left( \\text{ Lat }_{j} \\right)
             }
         \\end{equation}
@@ -75,27 +75,27 @@ def spatial_mean(
     return mean_temp
 
 
-def _latexify(input: str) -> str:
+def _latexify(units: str) -> str:
     """
     Latexify the units.
 
     Args:
-        input (str): input string.
+        ins (str): input string.
 
     Returns:
         str: latexed output string.
     """
     output = ""
-    for x in input.split(" "):
-        if "**" in x:
-            y, z = x.split("**")
-            output += y+"$^{"+ z +"}$"
+    for unit_index in units.split(" "):
+        if "**" in unit_index:
+            unit, index = unit_index.split("**")
+            output += unit + "$^{" + index + "}$"
         else:
-            output += x
+            output += unit_index
         output += " "
     output.strip(" ")
-    if "degree_Celsius" in input:
-        output.replace("degree_Celsius","$^{\circ}$C")
+    if "degree_Celsius" in units:
+        output.replace("degree_Celsius", r"$^{\circ}$C")
     return output
 
 
@@ -107,8 +107,7 @@ def plot_units(
     """
     Adding good latex units to make the xarray object plottable.
 
-    Currently only for lat, lon axes, but could be improved to
-    add degrees celsius and so on.
+    Xarray uses "long_name" and "units" attributes for plotting.
 
     Fails softly.
 

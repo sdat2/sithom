@@ -7,7 +7,7 @@ from contextlib import contextmanager
 
 
 class TimeoutException(Exception):
-    pass
+    """The function has timed out, as the time limit has been reached."""
 
 
 @contextmanager
@@ -16,8 +16,7 @@ def time_limit(seconds: int) -> None:
 
     Function taken from:
 
-    https://stackoverflow.com/questions/366682/
-    how-to-limit-execution-time-of-a-function-call
+    https://stackoverflow.com/a/601168
 
     Args:
         seconds (int): how  many seconds to wait until timeout.
@@ -86,13 +85,14 @@ def hr_time(time_in: float) -> str:
                 '02 min 00 s'
     """
     if time_in < 60:
-        return "%2.5f s" % time_in
+        output_str =  "%2.5f s" % time_in
     elif 60 < time_in < 60 * 60:
-        return time.strftime("%M min %S s", time.gmtime(time_in))
+        output_str =  time.strftime("%M min %S s", time.gmtime(time_in))
     elif 60 * 60 < time_in < 24 * 60 * 60:
-        return time.strftime("%H hr %M min %S s", time.gmtime(time_in))
+        output_str =  time.strftime("%H hr %M min %S s", time.gmtime(time_in))
     else:
-        return "%2.5f s" % time_in
+        output_str =  "%2.5f s" % time_in
+    return output_str
 
 
 def timeit(method: Callable) -> Callable:
@@ -124,16 +124,16 @@ def timeit(method: Callable) -> Callable:
 
     @wraps(method)
     def timed(*args, **kw):
-        ts = time.perf_counter()
+        time_start = time.perf_counter()
         result = method(*args, **kw)
-        te = time.perf_counter()
+        time_end = time.perf_counter()
         # time.gmtime()
         if "log_time" in kw:
             name = kw.get("log_name", method.__name__.lower())
-            kw["log_time"][name] = te - ts
-            print("%r " % method.__name__, hr_time(te - ts), "\n")
+            kw["log_time"][name] = time_end - time_start
+            print("%r " % method.__name__, hr_time(time_end - time_start), "\n")
         else:
-            print("%r " % method.__name__, hr_time(te - ts), "\n")
+            print("%r " % method.__name__, hr_time(time_end - time_start), "\n")
         return result
 
     return timed

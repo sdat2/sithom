@@ -28,7 +28,6 @@ with open(os.path.join(here, NAME, "_version.py")) as f:
     exec(f.read(), about)
 
 
-
 class UploadCommand(Command):
     """Support setup.py upload."""
 
@@ -100,8 +99,6 @@ setup(
         "Operating System :: OS Independent",
         "Typing :: Typed",
     ],
-    cmdclass={
-        "upload": UploadCommand,
-    },
+    cmdclass={"upload": UploadCommand,},
     python_requires=">=3.6",
 )

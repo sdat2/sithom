@@ -39,12 +39,12 @@ Example:
         # label subplots
         label_subplots(axs, start_from=0, fontsize=10)
 
+from sys import platform
 """
 from typing import Sequence, Tuple, Optional, Literal
-from sys import platform
 import itertools
-import numpy as np
 from distutils.spawn import find_executable
+import numpy as np
 import matplotlib
 import seaborn as sns
 from jupyterthemes import jtplot
@@ -96,7 +96,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
 
     """
     # mac needs a different plotting backend...
-    #if platform == "darwin":
+    # if platform == "darwin":
     #    matplotlib.use("TkAgg")
 
     if in_notebook():
