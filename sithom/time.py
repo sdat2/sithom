@@ -117,9 +117,10 @@ def timeit(method: Callable) -> Callable:
             ...             total += 1
             >>> tmp_log_d = {}
             >>> loop(log_time=tmp_log_d)
+            'loop'  0.04346 s
             >>> print(tmp_log_d["loop"])
             >>> loop()
-                "'loop'  0.04346 s "
+            'loop'  0.04346 s
 
     """
 

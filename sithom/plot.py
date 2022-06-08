@@ -96,8 +96,8 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
 
     """
     # mac needs a different plotting backend...
-    if platform == "darwin":
-        matplotlib.use("TkAgg")
+    #if platform == "darwin":
+    #    matplotlib.use("TkAgg")
 
     if in_notebook():
         jtplot.style(theme="grade3", context="notebook", ticks=True, grid=False)
@@ -254,7 +254,7 @@ def get_dim(
 
             >>> from sithom.plot import get_dim
             >>> dim_tuple = get_dim(fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
-            >>> print("({:.2f}, {:.2f})" % dim_tuple)
+            >>> print("({:.2f}, {:.2f})" % (dim_tuple[0], dim_tuple[1]))
 
     """
 
