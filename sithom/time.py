@@ -108,19 +108,17 @@ def timeit(method: Callable) -> Callable:
     Examples:
         Here is an example with the tracking functionality and without::
 
-            >>> from sithom.time import timeit
-            >>> @timeit
-            ... def loop(**kwargs):
-            ...     total = 0
-            ...     for i in range(int(10e2)):
-            ...         for j in range(int(10e2)):
-            ...             total += 1
-            >>> tmp_log_d = {}
-            >>> loop(log_time=tmp_log_d)
-            'loop'  0.04346 s
-            >>> print(tmp_log_d["loop"])
-            >>> loop()
-            'loop'  0.04346 s
+            from sithom.time import timeit
+            @timeit
+            def loop(**kwargs):
+                total = 0
+                for i in range(int(10e2)):
+                    for j in range(int(10e2)):
+                        total += 1
+            tmp_log_d = {}
+            loop(log_time=tmp_log_d)
+            print(tmp_log_d["loop"])
+            loop()
 
     """
 
