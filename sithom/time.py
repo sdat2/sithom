@@ -24,22 +24,24 @@ def time_limit(seconds: int) -> None:
     Example:
         Call a function which will take longer than the time limit::
 
-            import time
-            from sithom.time import time_limit, TimeoutException
-
-            def long_function_call():
-                for t in range(5):
-                    print("t=", t, "seconds")
-                    time.sleep(1)
-            
-            try:
-                with time_limit(3):
-                    long_function_call()
-                    assert False
-            except TimeoutException as e:
-                print("Timed out!")
-            except:
-                print("A different exception")
+            >>> import time
+            >>> from sithom.time import time_limit, TimeoutException
+            >>> def long_function_call():
+            ...     for t in range(5):
+            ...         print("t=", t, "seconds")
+            ...         time.sleep(1)
+            >>> try:
+            ...     with time_limit(3):
+            ...         long_function_call()
+            ...         assert False
+            ... except TimeoutException as e:
+            ...     print("Timed out!")
+            ... except:
+            ...     print("A different exception")
+            t= 0 seconds
+            t= 1 seconds
+            t= 2 seconds
+            Timed out!
 
     """
 
