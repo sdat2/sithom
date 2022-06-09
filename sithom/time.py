@@ -31,6 +31,7 @@ def time_limit(seconds: int) -> None:
                 for t in range(5):
                     print("t=", t, "seconds")
                     time.sleep(1)
+            
             try:
                 with time_limit(3):
                     long_function_call()

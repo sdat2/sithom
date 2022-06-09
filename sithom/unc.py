@@ -26,6 +26,15 @@ def tex_uf(
 
     Returns:
         str: String ready to be added to a graph label.
+
+    Example usage::
+        >>> from uncertainties import ufloat
+        >>> from sithom.unc import tex_uf
+        >>> uf = ufloat(1, 0.5)
+        >>> tex_uf(uf, bracket=True, force_latex=True)
+        '$\\\\left( \\\\left(1 \\\\pm 0\\\\right) \\\\times 10^{0} \\\\right)$'
+
+    (Had to add twice as many backslashes for pytest to run.)
     """
     if exponential:
         exponential_str = "e"
