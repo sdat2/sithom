@@ -17,6 +17,7 @@ REQUIRED = [
     "cmocean",
     "xarray",
     "uncertainties",
+    "pooch" # only for test tutorial.
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))

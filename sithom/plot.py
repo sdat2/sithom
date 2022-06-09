@@ -329,8 +329,8 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
     Example:
         Usage example for sea surface temperature::
 
-            from sithom.plot import cmap
-            cmap_t = cmap("sst")
+            >>> from sithom.plot import cmap
+            >>> cmap_t = cmap("sst")
 
     """
 
@@ -381,10 +381,10 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
     Examples:
         Using with xarray::
 
-            import xarray as xr
-            from sithom.plot import axis_formatter
-            da = xr.tutorial.open_dataset("air_temperature").air
-            da.isel(time=0).plot(cbar_kwargs={"format": axis_formatter()})
+            >>> import xarray as xr
+            >>> from sithom.plot import axis_formatter
+            >>> da = xr.tutorial.open_dataset("air_temperature").air
+            >>> quadmesh = da.isel(time=0).plot(cbar_kwargs={"format": axis_formatter()})
 
     """
 
