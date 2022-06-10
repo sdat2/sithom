@@ -32,7 +32,7 @@ def tex_uf(
         >>> from sithom.unc import tex_uf
         >>> uf = ufloat(1, 0.5)
         >>> tex_uf(uf, bracket=True, force_latex=True)
-        '$\\\\left( \\\\left(1 \\\\pm 0\\\\right) \\\\times 10^{0} \\\\right)$'
+            '$\\\\left( \\\\left(1 \\\\pm 0\\\\right) \\\\times 10^{0} \\\\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
     """

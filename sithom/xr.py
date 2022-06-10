@@ -112,7 +112,7 @@ def plot_units(
     Fails softly.
 
     Args:
-        xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/datset
+        xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/dataset
             (potentially with units for axes).
         x_dim (str): Defaults to "longitude"
         y_dim (str): Defaults to "latitude"
@@ -131,8 +131,10 @@ def plot_units(
 
     if isinstance(xr_obj, xr.Dataset):
         for var in xr_obj:
-            xr_obj[var].attrs["units"] = _latexify(xr_obj[var].attrs["units"])
+            if "units" in xr_obj[var].attrs:
+                xr_obj[var].attrs["units"] = _latexify(xr_obj[var].attrs["units"])
     elif isinstance(xr_obj, xr.DataArray):
-        xr_obj.attrs["units"] = _latexify(xr_obj.attrs["units"])
+        if "units" in xr_obj.attrs:
+            xr_obj.attrs["units"] = _latexify(xr_obj.attrs["units"])
 
     return xr_obj
