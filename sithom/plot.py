@@ -162,6 +162,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
     matplotlib.rcParams.update(p_setting)
 
 
+#pylint: disable=too-many-arguments
 def label_subplots(
     axs: Sequence[matplotlib.axes.Axes],
     labels: Sequence[str] = [chr(ord("`") + z) for z in range(1, 27)],
@@ -354,6 +355,7 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
 
     # map to cmocean colormaps
     cmap_map_d = {
+        # pylint: disable=no-member
         "rain": cmocean.cm.rain,
         "tarn": cmocean.cm.tarn,
         "sst": cmocean.cm.thermal,
