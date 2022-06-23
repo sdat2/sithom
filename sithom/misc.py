@@ -37,6 +37,11 @@ def human_readable_size(num: int, suffix: str = "B") -> str:
 
     Returns:
         str: A human readable version of the number of bytes.
+
+    Example of using human readable sizes:
+        >>> from sithom.misc import human_readable_size
+        >>> assert human_readable_size(int(10e5)) == "977 KB"
+        >>> assert human_readable_size(int(10e13)) == "91 TB"
     """
     assert num >= 0, "Size cannot be negative."
     for unit in ["", "K", "M", "G", "T", "P", "E", "Z"]:
@@ -118,6 +123,10 @@ def get_byte_size(obj: object) -> str:
     Returns:
         str: Human readable string with the size of the object
 
-    """
+    Examples of using::
+        >>> import numpy as np
+        >>> from sithom.misc import get_byte_size
+        >>> assert isinstance(get_byte_size(np.zeros(int(10e4))), str)
 
+    """
     return human_readable_size(calculate_byte_size_recursively(obj))

@@ -1,4 +1,4 @@
-"""Xarray Utilities Module."""
+"""Xarray utilities module."""
 from typing import Union
 import numpy as np
 import xarray as xr
@@ -93,9 +93,11 @@ def _latexify(units: str) -> str:
         else:
             output += unit_index
         output += " "
-    output.strip(" ")
+    output = output.strip(" ")
     if "degree_Celsius" in units:
-        output.replace("degree_Celsius", r"$^{\circ}$C")
+        output = output.replace("degree_Celsius", r"$^{\circ}$C")
+    if "degK" in units:
+        output = output.replace("degK", "K")
     return output
 
 
@@ -121,6 +123,14 @@ def plot_units(
         Union[xr.DataArray, xr.Dataset]: Datarray/Dataset with correct
             units/names for plotting. Assuming that you've given the
             correct x_dim and y_dim for the object.
+
+    Examples of using it:
+        >>> import xarray as xr
+        >>> from sithom.xr import plot_units
+        >>> da = plot_units(xr.tutorial.open_dataset("air_temperature").air)
+        >>> da.attrs["units"]
+        'K'
+
     """
     if x_dim in xr_obj.coords:
         xr_obj.coords[x_dim].attrs["units"] = r"$^{\circ}$E"
