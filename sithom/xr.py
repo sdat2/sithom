@@ -53,12 +53,12 @@ def spatial_mean(
 
     Example of calculating and plotting mean timeseries of dataarray::
 
-        import xarray as xr
-        from sithom.xr import spatial_mean
-        da = xr.tutorial.open_dataset("air_temperature").air
-        timeseries_mean = spatial_mean(da)
-        timeseries_mean.plot.line()
-
+        >>> import xarray as xr
+        >>> from sithom.xr import spatial_mean
+        >>> da = xr.tutorial.open_dataset("air_temperature").air
+        >>> timeseries_mean = spatial_mean(da, x_dim="lon", y_dim="lat")
+    
+    timeseries_mean.plot.line()
     """
     # Find mean temperature for each latitude
     mean_sst_lat = dataarray.mean(dim=x_dim)
@@ -94,10 +94,10 @@ def _latexify(units: str) -> str:
             output += unit_index
         output += " "
     output = output.strip(" ")
-    if "degree_Celsius" in units:
-        output = output.replace("degree_Celsius", r"$^{\circ}$C")
-    if "degK" in units:
-        output = output.replace("degK", "K")
+    unit_d = {"degree_Celsius": r"$^{\circ}$C", "degK": "K"}
+    for initial_unit in unit_d:
+        if initial_unit in units:
+            output = output.replace(initial_unit, unit_d[initial_unit])
     return output
 
 

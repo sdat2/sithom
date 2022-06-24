@@ -23,7 +23,6 @@ def tex_uf(
         exponential (bool, optional): Whether to put in scientific notation.
             Defaults to True.
 
-
     Returns:
         str: String ready to be added to a graph label.
 

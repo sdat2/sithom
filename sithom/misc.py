@@ -65,7 +65,6 @@ def calculate_byte_size_recursively(obj: object, seen: set = None) -> int:
 
     Returns:
         int: The size of the object in bytes.
-
     """
 
     # Note: getsizeof alone is not enough, as it only returns the size of the top
@@ -127,6 +126,5 @@ def get_byte_size(obj: object) -> str:
         >>> import numpy as np
         >>> from sithom.misc import get_byte_size
         >>> assert isinstance(get_byte_size(np.zeros(int(10e4))), str)
-
     """
     return human_readable_size(calculate_byte_size_recursively(obj))
