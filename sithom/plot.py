@@ -39,7 +39,6 @@ Example:
         # label subplots
         label_subplots(axs, start_from=0, fontsize=10)
 
-from sys import platform
 """
 from typing import Sequence, Tuple, Optional, Literal
 import itertools
@@ -395,3 +394,27 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
     fit_obj.set_powerlimits((0, 0))
 
     return fit_obj
+
+
+def lim(npa: np.ndarray, method="5perc") -> Tuple[float, float]:
+    """Return colorbar limits.
+
+    Args:
+        npa (np.ndarray): A numpy ndarray with values in, including nans.
+        method (str, optional): Ignoring nans, use 5th and 95th percentile. Defaults to "5perc".
+
+    Returns:
+        Tuple[float, float]: (vmin, vmax)]
+
+    Example with a Gaussian distribution::
+        >>> import numpy as np
+        >>> from sithom.plot import lim
+        >>> samples = np.random.normal(size=(100, 100, 100))
+        >>> vmin, vmax = lim(samples)
+        >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
+        (-1.6, 1.6)
+    """
+    if method == "5perc":
+        vmin = np.nanpercentile(npa, 5)
+        vmax = np.nanpercentile(npa, 95)
+    return (vmin, vmax)

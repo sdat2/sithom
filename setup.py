@@ -98,6 +98,6 @@ setup(
         "Operating System :: OS Independent",
         "Typing :: Typed",
     ],
-    cmdclass={"upload": UploadCommand,},
     python_requires=">=3.8",
+    cmdclass={"upload": UploadCommand,},
 )
