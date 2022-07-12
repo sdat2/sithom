@@ -396,15 +396,29 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
     return fit_obj
 
 
-def lim(npa: np.ndarray, method="5perc") -> Tuple[float, float]:
+def _balance(vmin: float, vmax: float) -> Tuple[float, float]:
+    """Balance vmin, vmax.
+
+    Args:
+        vmin (float): _description_
+        vmax (float): _description_
+
+    Returns:
+        Tuple[float, float]: balanced colormap.
+    """
+    return np.min([-vmax, vmin]), np.max([-vmin, vmax])
+
+
+def lim(npa: np.ndarray, method: str = "5perc", balance: bool = False) -> Tuple[float, float]:
     """Return colorbar limits.
 
     Args:
         npa (np.ndarray): A numpy ndarray with values in, including nans.
         method (str, optional): Ignoring nans, use 5th and 95th percentile. Defaults to "5perc".
-
+        balance (bool, optional): Whether to balance limits around zero.
+    
     Returns:
-        Tuple[float, float]: (vmin, vmax)]
+        Tuple[float, float]: (vmin, vmax)
 
     Example with a Gaussian distribution::
         >>> import numpy as np
@@ -414,7 +428,12 @@ def lim(npa: np.ndarray, method="5perc") -> Tuple[float, float]:
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
         (-1.6, 1.6)
     """
+
     if method == "5perc":
         vmin = np.nanpercentile(npa, 5)
         vmax = np.nanpercentile(npa, 95)
+
+    if balance:
+        _balance(vmin, vmax)
+
     return (vmin, vmax)
