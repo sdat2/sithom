@@ -400,8 +400,8 @@ def _balance(vmin: float, vmax: float) -> Tuple[float, float]:
     """Balance vmin, vmax.
 
     Args:
-        vmin (float): _description_
-        vmax (float): _description_
+        vmin (float): Initial colorbar vmin.
+        vmax (float): Initial colorbar vmax.
 
     Returns:
         Tuple[float, float]: balanced colormap.
@@ -425,6 +425,9 @@ def lim(npa: np.ndarray, method: str = "5perc", balance: bool = False) -> Tuple[
         >>> from sithom.plot import lim
         >>> samples = np.random.normal(size=(100, 100, 100))
         >>> vmin, vmax = lim(samples)
+        >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
+        (-1.6, 1.6)
+        >>> vmin, vmax = lim(samples, balance=True)
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
         (-1.6, 1.6)
     """
