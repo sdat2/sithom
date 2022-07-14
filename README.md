@@ -15,7 +15,11 @@ pip install sithom
 ## Package structure
 
 ```txt
-├── geograph          <- package folder.
+├── LICENSE
+├── Makefile           <- Makefile with commands.
+├── README.md          <- The top-level README for developers using this project.
+|
+├── sithom          <- package folder.
 |   |
 │   ├── __init__.py   <- init.
 │   ├── _version.py   <- key package information.
@@ -23,9 +27,9 @@ pip install sithom
 │   ├── plot.py       <- plot utilties.
 │   ├── time.py       <- time utilties.
 │   ├── unc.py        <- uncertainties utilties.
-│   ├── xr.py         <- xarray utilties.
+│   └── xr.py         <- xarray utilties.
 |
-├── tests             <- test folder.
+└── tests             <- test folder.
 
 ```
 
