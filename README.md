@@ -5,3 +5,23 @@
 A package for shared utility scripts that I use in my research projects.
 
 I realised I was copying functionality from project to project. So instead, here it is.
+
+## Install using pip:
+
+```bash
+pip install sithom
+```
+
+## Package structure
+
+```txt
+├── geograph         <- package folder
+|   |
+│   ├── __init__.py  <- init.
+│   ├── _version.py  <- version with key package information.
+│   ├── misc.py      <- miscellanious utilties.
+│   ├── plot.py      <- plot utilties.
+│   ├── time.py      <- time utilties.
+│   ├── unc.py       <- uncertainties utilties.
+│   ├── xr.py        <- xarray utilties.
+```
