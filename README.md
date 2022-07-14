@@ -15,13 +15,25 @@ pip install sithom
 ## Package structure
 
 ```txt
-├── geograph         <- package folder
+├── geograph          <- package folder.
 |   |
-│   ├── __init__.py  <- init.
-│   ├── _version.py  <- version with key package information.
-│   ├── misc.py      <- miscellanious utilties.
-│   ├── plot.py      <- plot utilties.
-│   ├── time.py      <- time utilties.
-│   ├── unc.py       <- uncertainties utilties.
-│   ├── xr.py        <- xarray utilties.
+│   ├── __init__.py   <- init.
+│   ├── _version.py   <- key package information.
+│   ├── misc.py       <- miscellanious utilties.
+│   ├── plot.py       <- plot utilties.
+│   ├── time.py       <- time utilties.
+│   ├── unc.py        <- uncertainties utilties.
+│   ├── xr.py         <- xarray utilties.
+|
+├── tests             <- test folder.
+
 ```
+
+## Requirements
+
+- Python 3.8+
+- `matplotlib`
+- `seaborn`
+- `cmocean`
+- `xarray`
+- `uncertainties`
