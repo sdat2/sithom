@@ -2,7 +2,7 @@
 
 <a href="hhttps://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
  <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-  <a href="(https://github.com/sdat2/sithom/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg"></a>
+  <a href="https://github.com/sdat2/sithom/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg"></a>
    <a href="https://sithom.readthedocs.io/en/latest/MAIN_README.html"><img alt="Documentation Status" src="https://readthedocs.org/projects/sithom/badge/?version=latest"></a>
     <a href="https://badge.fury.io/py/sithom"><img alt="PyPI Version" src="https://badge.fury.io/py/sithom.svg"></a>
 

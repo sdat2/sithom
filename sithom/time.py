@@ -29,7 +29,7 @@ def time_limit(seconds: int) -> None:
             >>> def long_function_call():
             ...     for t in range(0, 5):
             ...         print("t=", t, "seconds")
-            ...         time.sleep(1)
+            ...         time.sleep(1.1)
             >>> try:
             ...     with time_limit(3):
             ...         long_function_call()
@@ -42,6 +42,10 @@ def time_limit(seconds: int) -> None:
             t= 1 seconds
             t= 2 seconds
             Timed out!
+
+    Seems not to work for windows:
+    
+    https://github.com/sdat2/sithom/runs/7343392694?check_suite_focus=true
 
     """
 
