@@ -27,7 +27,7 @@ def time_limit(seconds: int) -> None:
             >>> import time
             >>> from sithom.time import time_limit, TimeoutException
             >>> def long_function_call():
-            ...     for t in range(5):
+            ...     for t in range(0, 5):
             ...         print("t=", t, "seconds")
             ...         time.sleep(1)
             >>> try:
