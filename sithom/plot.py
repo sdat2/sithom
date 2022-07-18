@@ -423,7 +423,7 @@ def lim(npa: np.ndarray, method: str = "5perc", balance: bool = False) -> Tuple[
     Example with a Gaussian distribution::
         >>> import numpy as np
         >>> from sithom.plot import lim
-        >>> samples = np.random.normal(size=(100, 100, 100))
+        >>> samples = np.random.normal(size=(100, 100, 100, 100))
         >>> vmin, vmax = lim(samples)
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
         (-1.6, 1.6)
