@@ -83,7 +83,7 @@ setup(
     # test_suite=str(NAME +".tests.test_all.suite"),
     # setup_requires=["pytest-runner"],
     # package_dir={"": NAME},
-    tests_require=["pytest"],
+    tests_require=["pytest", "pooch"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
