@@ -36,8 +36,9 @@ def time_limit(seconds: int) -> None:
             ...         assert False
             ... except TimeoutException as e:
             ...     print("Timed out!")
-            ... except:
-            ...     print("A different exception")
+            ... except Exception as e:
+            ...     print("A different exception\t", e)
+            
             t= 0 seconds
             t= 1 seconds
             t= 2 seconds
