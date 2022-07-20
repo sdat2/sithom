@@ -409,7 +409,9 @@ def _balance(vmin: float, vmax: float) -> Tuple[float, float]:
     return np.min([-vmax, vmin]), np.max([-vmin, vmax])
 
 
-def lim(npa: np.ndarray, method: str = "5perc", balance: bool = False) -> Tuple[float, float]:
+def lim(
+    npa: np.ndarray, method: str = "5perc", balance: bool = False
+) -> Tuple[float, float]:
     """Return colorbar limits.
 
     Args:

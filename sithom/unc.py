@@ -31,15 +31,28 @@ def tex_uf(
         >>> from sithom.unc import tex_uf
         >>> uf = ufloat(1, 0.5)
         >>> tex_uf(uf, bracket=True, force_latex=True)
-            '$\\\\left( \\\\left(1 \\\\pm 0\\\\right) \\\\times 10^{0} \\\\right)$'
+            '$\\\\left( 1.0 \\\\pm 0.5 \\\\right)$'
+        >>> uf = ufloat(10, 5)
+        >>> tex_uf(uf, bracket=True, force_latex=True)
+            '$\\\\left( \\\\left(1.0 \\\\pm 0.5\\\\right) \\\\times 10^{1} \\\\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
+    Matching needs to be improved to follow rule and not make thing 
+    exponential when they don't need to be.
     """
-    if exponential:
+    if exponential and round(np.log10(abs(ufloat_input.n))) != 0:
         exponential_str = "e"
     else:
         exponential_str = ""
+
     decimal_point = round(np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s)))
+
+    if str(ufloat_input.n)[0] == "1":
+        if exponential_str == "e":
+            decimal_point += 1
+        else:
+            decimal_point += 2  # weird behaviour
+
     # check if Latex is engaged
     if matplotlib.rcParams["text.usetex"] is True or force_latex:
         if bracket:

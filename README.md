@@ -10,7 +10,7 @@ A package for shared utility scripts that I use in my research projects.
 
 I realised I was copying functionality from project to project. So instead, here it is.
 
-## Install using pip:
+## Install using pip
 
 ```bash
 pip install sithom
@@ -19,21 +19,22 @@ pip install sithom
 ## Package structure
 
 ```txt
-├── LICENSE
+├── LICENSE            <- MIT LICENSE
 ├── Makefile           <- Makefile with commands.
 ├── README.md          <- The top-level README for developers using this project.
+├── setup.py           <- Python setup up file for pip install.
 |
-├── sithom          <- package folder.
+├── sithom             <- package folder.
 |   |
-│   ├── __init__.py   <- init.
-│   ├── _version.py   <- key package information.
-│   ├── misc.py       <- miscellanious utilties.
-│   ├── plot.py       <- plot utilties.
-│   ├── time.py       <- time utilties.
-│   ├── unc.py        <- uncertainties utilties.
-│   └── xr.py         <- xarray utilties.
+│   ├── __init__.py    <- init.
+│   ├── _version.py    <- key package information.
+│   ├── misc.py        <- miscellanious utilties.
+│   ├── plot.py        <- plot utilties.
+│   ├── time.py        <- time utilties.
+│   ├── unc.py         <- uncertainties utilties.
+│   └── xr.py          <- xarray utilties.
 |
-└── tests             <- test folder.
+└── tests              <- test folder.
 
 ```
 

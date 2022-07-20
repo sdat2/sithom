@@ -84,6 +84,13 @@ def _latexify(units: str) -> str:
 
     Returns:
         str: latexed output string.
+
+    Examples::
+        >>> from sithom.xr import _latexify
+        >>> _latexify("m s**-2")
+        'm s$^{-2}$'
+        >>> _latexify("kg m s**-2")
+        'kg m s$^{-2}$'
     """
     output = ""
     for unit_index in units.split(" "):
@@ -124,7 +131,7 @@ def plot_units(
             units/names for plotting. Assuming that you've given the
             correct x_dim and y_dim for the object.
 
-    Examples of using it:
+    Examples of using it::
         >>> import xarray as xr
         >>> from sithom.xr import plot_units
         >>> da = plot_units(xr.tutorial.open_dataset("air_temperature").air)
