@@ -37,9 +37,12 @@ def tex_uf(
             '$\\\\left( \\\\left(1.0 \\\\pm 0.5\\\\right) \\\\times 10^{1} \\\\right)$'
         >>> tex_uf(ufloat(0.0, 0.0), bracket=True, force_latex=True) # works weirdly
             '$\\\\left( 0.0 \\\\pm 0 \\\\right)$'
+        >>> tex_uf(ufloat(2, 0.06), bracket=True, force_latex=True)
+            '$\\\\left( 2.0 \\\\pm 0.1 \\\\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
     """
+    # trying to deal with divide by zero possibility.
     if ufloat_input.n == 0.0:
         exponential_str = ""
     else:
