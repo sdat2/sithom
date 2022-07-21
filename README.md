@@ -1,10 +1,6 @@
 # sithom README
 
-<a href="hhttps://opensource.org/licenses/MIT"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg"/></a>
-<a href="https://github.com/psf/black"><img alt="Code style black" src="https://img.shields.io/badge/code%20style-black-000000.svg"/></a>
-<a href="https://github.com/sdat2/sithom/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg"/></a>
-<a href="https://sithom.readthedocs.io/en/latest/MAIN_README.html"><img alt="Documentation Status" src="https://readthedocs.org/projects/sithom/badge/?version=latest"/></a>
-<a href="https://badge.fury.io/py/sithom"><img alt="PyPI Version" src="https://badge.fury.io/py/sithom.svg"/></a>
+ [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>[![Python package](https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg)](https://github.com/sdat2/sithom/actions/workflows/python-package.yml)[![Documentation Status](https://readthedocs.org/projects/sithom/badge/?version=latest)](https://sithom.readthedocs.io/en/latest/?badge=latest)[![PyPI version](https://badge.fury.io/py/sithom.svg)](https://badge.fury.io/py/sithom)
 
 A package for shared utility scripts that I use in my research projects.
 
@@ -35,7 +31,6 @@ pip install sithom
 │   └── xr.py          <- xarray utilties.
 |
 └── tests              <- test folder.
-
 ```
 
 ## Requirements
