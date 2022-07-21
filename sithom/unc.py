@@ -35,23 +35,32 @@ def tex_uf(
         >>> uf = ufloat(10, 5)
         >>> tex_uf(uf, bracket=True, force_latex=True)
             '$\\\\left( \\\\left(1.0 \\\\pm 0.5\\\\right) \\\\times 10^{1} \\\\right)$'
+        >>> tex_uf(ufloat(0.0, 0.0), bracket=True, force_latex=True) # works weirdly
+            '$\\\\left( 0.0 \\\\pm 0 \\\\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
-    Matching needs to be improved to follow rule and not make thing 
-    exponential when they don't need to be.
     """
-    if exponential and round(np.log10(abs(ufloat_input.n))) != 0:
-        exponential_str = "e"
-    else:
+    if ufloat_input.n == 0.0:
         exponential_str = ""
-
-    decimal_point = round(np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s)))
-
-    if str(ufloat_input.n)[0] == "1":
-        if exponential_str == "e":
-            decimal_point += 1
+    else:
+        if exponential and round(np.log10(abs(ufloat_input.n))) != 0:
+            exponential_str = "e"
         else:
-            decimal_point += 2  # weird behaviour
+            exponential_str = ""
+
+    if ufloat_input.n == 0.0 or ufloat_input.s == 0.0:
+        decimal_point = 0
+    else:
+        # ensure that 1 s.f for error means both agree on decimal points.
+        decimal_point = round(np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s)))
+
+        # enforce rule that if it starts with a 1, add an extra decimal point.
+
+        if str(ufloat_input.n)[0] == "1":
+            if exponential_str == "e":
+                decimal_point += 1
+            else:
+                decimal_point += 2  # weird behaviour
 
     # check if Latex is engaged
     if matplotlib.rcParams["text.usetex"] is True or force_latex:

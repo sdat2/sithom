@@ -1,4 +1,4 @@
-"""Polynomial."""
+"""Polynomial curve fitting."""
 from typing import Callable, Tuple, Sequence, Union, Optional, Literal
 import numpy as np
 from uncertainties import unumpy as unp, ufloat
@@ -71,10 +71,12 @@ def fit(
 ) -> Tuple[unp.uarray, Callable]:
     """
     Fit a polynomial curve, with an estimate of the uncertainty.
+
     Args:
         x_npa (Sequence[Union[float, int]]): The x values to fit.
         y_npa (Sequence[Union[float, int]]): The y values to fit.
         reg_type (str, optional): Which regression to do. Defaults to "lin".
+
     Returns:
         Tuple[unp.uarray, Callable]: Paramaters with uncertainty,
             function to put data into.
@@ -94,7 +96,7 @@ def _label(param: Sequence[ufloat]) -> str:
     """Label generator for polynomial.
 
     Args:
-        param (Sequence[Flt]): Polynomial fit to print out.
+        param (Sequence[ufloat]): Polynomial fit to print out.
 
     Returns:
         str: Output of polynomial (e.g y  = ($2\pm1$) x + 1\pm 2 )
@@ -104,7 +106,8 @@ def _label(param: Sequence[ufloat]) -> str:
         >>> from uncertainties import ufloat
         >>> _label([ufloat(1, 1), ufloat(1, 1), ufloat(1, 1)])
         'y =  + $\\\\left( 1.0 \\\\pm 1.0 \\\\right)$x$^{2}$ + $\\\\left( 1.0 \\\\pm 1.0 \\\\right)$x + $1.0 \\\\pm 1.0$'
-    
+        >>> _label([ufloat(1, 1), ufloat(1, 1), ufloat(0, 0)])
+        'y =  + $\\\\left( 1.0 \\\\pm 1.0 \\\\right)$x$^{2}$ + $\\\\left( 1.0 \\\\pm 1.0 \\\\right)$x + $0.0 \\\\pm 0$'
     """
     output = "y = "
     for i in range(len(param)):
@@ -129,8 +132,8 @@ def plot(
     reg_type: Literal["lin_0", "lin", "parab", "cubic"] = "lin",
     x_label: str = "x label",
     y_label: str = "y label",
+    ext: float = 0.05,
     fig_path: Optional[str] = None,
-    ext=0.05,
     ax_format: Optional[Literal["both", "x", "y"]] = "both",
 ) -> Tuple[unp.uarray, Callable]:
     """
@@ -143,6 +146,7 @@ def plot(
             r"$\\Delta \\bar{T}_s$ over tropical pacific (pac) region [$\\Delta$ K]"
         y_label (str): Y labelsfor plot. e.g.
             r"$\\Delta \\bar{T}_s$ over nino3.4 region [$\\Delta$ K]"
+        ext: how far in percentage terms to extend beyond data.
         fig_path (Optional[str], optional): Path to stor the figure in.
             Defaults to None.
         ax_format (Literal["both", "x", "y"], optional): which axes to format
@@ -161,7 +165,9 @@ def plot(
     y_pred = func(x_pred)
     y_pred_n = unp.nominal_values(y_pred)
     y_pred_s = unp.std_devs(y_pred)
-
+    if len(param) == 1:
+        param = list(param)
+        param.append(ufloat(0, 0))
     label = _label(param)
     plt.fill_between(
         x_pred, y_pred_n + y_pred_s, y_pred_n - y_pred_s, alpha=0.5, color=CAM_BLUE
