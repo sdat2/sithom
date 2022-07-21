@@ -33,9 +33,11 @@ def _lin_0(x: float, a: Flt) -> Flt:
 def _return_func(param: unp.uarray, reg_type: str = "lin") -> Callable:
     """
     Return function so that the linear function only has to be referenced once.
+
     Args:
         param (np.ndarray): the param.
         reg_type (str, optional): Which fit occured. Defaults to "lin".
+
     Returns:
         Callable: Function
     """
@@ -79,7 +81,16 @@ def fit(
 
     Returns:
         Tuple[unp.uarray, Callable]: Paramaters with uncertainty,
-            function to put data into.
+            and function to put input data into.
+
+    
+    Example of usage::
+        >>> import numpy as np
+        >>> from sithom.curve import fit
+        >>> param, func = fit(np.array([0, 1, 2]), np.array([1, 4, 7]))
+        >>> assert np.isclose(param[0].n, 3.0)
+        >>> assert np.isclose(param[1].n, 1.00)
+
     """
     func_dict = {"lin": _lin, "lin0": _lin_0, "parab": _parab, "cubic": _cubic}
 
