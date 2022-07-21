@@ -149,6 +149,7 @@ def plot(
 ) -> Tuple[unp.uarray, Callable]:
     """
     Plot the polynomial.
+
     Args:
         x_values (Sequence[Union[float, int]]): The x values to fit.
         y_values (Sequence[Union[float, int]]): The y values to fit.
@@ -162,9 +163,12 @@ def plot(
             Defaults to None.
         ax_format (Literal["both", "x", "y"], optional): which axes to format
             in scientific notation. Defaults to "both".
+
     Returns:
         Tuple[unp.uarray, Callable]: Paramaters with uncertainty,
             function to put data into.
+
+    Example::
     """
     param, func = fit(x_values, y_values, reg_type=reg_type)
     min_x_data = min(x_values)

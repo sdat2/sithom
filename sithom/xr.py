@@ -93,7 +93,7 @@ def _latexify(units: str) -> str:
         >>> _latexify("kg m s**-2")
         'kg m s$^{-2}$'
         >>> _latexify("degree_Celsius")
-        '$^{\\circ}$C'
+        '$^{\\\\circ}$C'
         >>> _latexify("degK")
         'K'
 
