@@ -60,6 +60,7 @@ def spatial_mean(
     
     timeseries_mean.plot.line()
     """
+
     # Find mean temperature for each latitude
     mean_sst_lat = dataarray.mean(dim=x_dim)
 
@@ -91,6 +92,11 @@ def _latexify(units: str) -> str:
         'm s$^{-2}$'
         >>> _latexify("kg m s**-2")
         'kg m s$^{-2}$'
+        >>> _latexify("degree_Celsius")
+        '$^{\\circ}$C'
+        >>> _latexify("degK")
+        'K'
+
     """
     output = ""
     for unit_index in units.split(" "):

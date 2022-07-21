@@ -425,7 +425,7 @@ def lim(
     Example with a Gaussian distribution::
         >>> import numpy as np
         >>> from sithom.plot import lim
-        >>> samples = np.random.normal(size=(100, 100, 100, 100))
+        >>> samples = np.random.normal(size=(100, 100, 100, 10))
         >>> vmin, vmax = lim(samples)
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
         (-1.6, 1.6)
