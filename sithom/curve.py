@@ -39,7 +39,11 @@ def _return_func(param: unp.uarray, reg_type: str = "lin") -> Callable:
         reg_type (str, optional): Which fit occured. Defaults to "lin".
 
     Returns:
-        Callable: Function
+        Callable: Function.
+
+    Examples::
+        >>> from sithom.curve import _return_func
+        >>> func = _return_func(unp.uarray([1, 2], [0.5, 1]), reg_type="lin")
     """
 
     def lin(x: Sequence[Flt]) -> np.array:
@@ -83,7 +87,6 @@ def fit(
         Tuple[unp.uarray, Callable]: Paramaters with uncertainty,
             and function to put input data into.
 
-    
     Example of usage::
         >>> import numpy as np
         >>> from sithom.curve import fit
@@ -175,7 +178,6 @@ def plot(
     max_x_data = max(x_values)
     min_x_pred = min_x_data - (max_x_data - min_x_data) * ext
     max_x_pred = max_x_data + (max_x_data - min_x_data) * ext
-
     x_pred = np.linspace(min_x_pred, max_x_pred, num=50)
     y_pred = func(x_pred)
     y_pred_n = unp.nominal_values(y_pred)
@@ -201,6 +203,7 @@ def plot(
         )
     else:
         plt.legend()
+
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.xlim(min_x_pred, max_x_pred)
