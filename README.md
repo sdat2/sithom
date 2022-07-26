@@ -18,21 +18,22 @@ pip install sithom
 
 ```txt
 
-├── LICENSE            <- MIT LICENSE
+├── LICENSE            <- MIT Open software license.
 ├── Makefile           <- Makefile with commands.
+├── pytest.ini         <- Enable doctest unit-tests.
 ├── README.md          <- The top-level README for developers using this project.
 ├── setup.py           <- Python setup up file for pip install.
 |
 ├── sithom             <- package folder.
 |   |
-│   ├── __init__.py    <- init.
-│   ├── _version.py    <- key package information.
+│   ├── __init__.py    <- init file.
+│   ├── _version.py    <- Key package information.
 │   ├── curve.py       <- Curve fitting w. uncertainty propogation.
-│   ├── misc.py        <- miscellanious utilties.
-│   ├── plot.py        <- plot utilties.
-│   ├── time.py        <- time utilties.
-│   ├── unc.py         <- uncertainties utilties.
-│   └── xr.py          <- xarray utilties.
+│   ├── misc.py        <- Miscellanious utilties.
+│   ├── plot.py        <- Plot utilties.
+│   ├── time.py        <- Time utilties.
+│   ├── unc.py         <- Uncertainties utilties.
+│   └── xr.py          <- Xarray utilties.
 |
 └── tests              <- test folder.
 
