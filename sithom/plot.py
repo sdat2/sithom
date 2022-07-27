@@ -42,7 +42,7 @@ Example:
 """
 from typing import Sequence, Tuple, Optional, Literal
 import itertools
-from distutils.spawn import find_executable
+from shutil import which
 import numpy as np
 import matplotlib
 import seaborn as sns
@@ -145,7 +145,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
     # colorblind optimised colormap as default.
     matplotlib.style.use("seaborn-colorblind")
 
-    if use_tex and find_executable("latex"):
+    if use_tex and which("latex") is not None:
         p_setting = {
             "pgf.texsystem": "pdflatex",
             "text.usetex": True,

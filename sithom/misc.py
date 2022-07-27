@@ -12,6 +12,11 @@ def in_notebook() -> bool:
 
     Returns:
         bool: whether in jupyter notebook.
+
+    Example of triggering from python terminal::
+        >>> from sithom.misc import in_notebook
+        >>> in_notebook()
+        False
     """
     try:
         # pylint: disable=import-outside-toplevel
