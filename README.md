@@ -1,6 +1,7 @@
 # sithom README
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)</a>[![Python package](https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg)](https://github.com/sdat2/sithom/actions/workflows/python-package.yml)[![Documentation Status](https://readthedocs.org/projects/sithom/badge/?version=latest)](https://sithom.readthedocs.io/en/latest/?badge=latest)[![PyPI version](https://badge.fury.io/py/sithom.svg)](https://badge.fury.io/py/sithom)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)</a>[![Python package](https://github.com/sdat2/sithom/actions/workflows/python-package.yml/badge.svg)](https://github.com/sdat2/sithom/actions/workflows/python-package.yml)[![Documentation Status](https://readthedocs.org/projects/sithom/badge/?version=latest)](https://sithom.readthedocs.io/en/latest/?badge=latest)[![PyPI version](https://badge.fury.io/py/sithom.svg)](https://badge.fury.io/py/sithom)[![DOI](https://zenodo.org/badge/496635214.svg)](https://zenodo.org/badge/latestdoi/496635214)
+
 
 ## Description
 
@@ -26,7 +27,7 @@ pip install sithom
 |
 ├── sithom             <- package folder.
 |   |
-│   ├── __init__.py    <- init file.
+│   ├── __init__.py    <- Init file.
 │   ├── _version.py    <- Key package information.
 │   ├── curve.py       <- Curve fitting w. uncertainty propogation.
 │   ├── misc.py        <- Miscellanious utilties.
@@ -35,15 +36,15 @@ pip install sithom
 │   ├── unc.py         <- Uncertainties utilties.
 │   └── xr.py          <- Xarray utilties.
 |
-└── tests              <- test folder.
+└── tests              <- Test folder.
 
 ```
 
 ## Requirements
 
-- Python 3.8+
-- `matplotlib`
-- `seaborn`
-- `cmocean`
-- `xarray`
-- `uncertainties`
+ - Python 3.8+
+ - `matplotlib`
+ - `seaborn`
+ - `cmocean`
+ - `xarray`
+ - `uncertainties`
