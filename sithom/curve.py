@@ -4,6 +4,7 @@ import numpy as np
 from uncertainties import unumpy as unp, ufloat
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
+from sithom.misc import in_notebook
 from sithom.plot import CAM_BLUE, BRICK_RED, OX_BLUE
 from sithom.unc import tex_uf
 
@@ -172,6 +173,11 @@ def plot(
             function to put data into.
 
     Example::
+        >>> from sithom.curve import plot
+        >>> param, func = plot(
+        ...                    [-0.1, 0.5, 1.0, 1.5, 2.3, 2.9, 3.5], 
+        ...                    [-0.7, 0.1, 0.3, 1.1, 1.5, 2.3, 2.2]
+        ...                   )
     """
     param, func = fit(x_values, y_values, reg_type=reg_type)
     min_x_data = min(x_values)
@@ -211,3 +217,7 @@ def plot(
 
     if fig_path is not None:
         plt.savefig(fig_path)
+    if not in_notebook:
+        plt.clf()
+
+    return param, func

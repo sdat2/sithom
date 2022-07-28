@@ -137,7 +137,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
         # "font.sans-serif": ["DejaVu Sans"],  # gets rid of error messages
         # "font.monospace": [],
         "figure.figsize": get_dim(),
-        "figure.autolayout": True, # turn on tight_layout.
+        "figure.autolayout": True,  # turn on tight_layout.
         "lines.linewidth": 1.0,
         "scatter.marker": "X",
         "image.cmap": "viridis",
@@ -334,6 +334,8 @@ def cmap(variable_name: str) -> matplotlib.colors.LinearSegmentedColormap:
 
             >>> from sithom.plot import cmap
             >>> cmap_t = cmap("sst")
+            >>> cmap_t = cmap("u")
+            >>> cmap_t = cmap("ranom")
 
     """
 
@@ -408,18 +410,26 @@ def _balance(vmin: float, vmax: float) -> Tuple[float, float]:
 
     Returns:
         Tuple[float, float]: balanced colormap.
+
+    Example::
+        >>> from sithom.plot import _balance
+        >>> _balance(1.4, 2.5)
+        (-2.5, 2.5)
+        >>> _balance(-1.0, 0.5)
+        (-1.0, 1.0)
     """
+    assert vmax > vmin
     return np.min([-vmax, vmin]), np.max([-vmin, vmax])
 
 
 def lim(
-    npa: np.ndarray, method: str = "5perc", balance: bool = False
+    npa: np.ndarray, percentile: float = 5, balance: bool = False
 ) -> Tuple[float, float]:
     """Return colorbar limits.
 
     Args:
         npa (np.ndarray): A numpy ndarray with values in, including nans.
-        method (str, optional): Ignoring nans, use 5th and 95th percentile. Defaults to "5perc".
+        percentile (float, optional): Ignoring nans, use 5th and 95th percentile. Defaults to "5perc".
         balance (bool, optional): Whether to balance limits around zero.
     
     Returns:
@@ -437,9 +447,8 @@ def lim(
         (-1.6, 1.6)
     """
 
-    if method == "5perc":
-        vmin = np.nanpercentile(npa, 5)
-        vmax = np.nanpercentile(npa, 95)
+    vmin = np.nanpercentile(npa, percentile)
+    vmax = np.nanpercentile(npa, 100 - percentile)
 
     if balance:
         _balance(vmin, vmax)
