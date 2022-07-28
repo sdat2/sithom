@@ -306,8 +306,7 @@ def set_dim(
             >>> from sithom.plot import set_dim
             >>> fig, ax = plt.subplots(1, 1)
             >>> set_dim(fig, fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
-            # >>> fig.
-
+ 
     """
     fig.set_size_inches(
         get_dim(width=width, fraction_of_line_width=fraction_of_line_width, ratio=ratio)

@@ -113,7 +113,7 @@ def _label(param: Sequence[ufloat]) -> str:
         param (Sequence[ufloat]): Polynomial fit to print out.
 
     Returns:
-        str: Output of polynomial (e.g y  = ($2\pm1$) x + 1\pm 2 )
+        str: Output of polynomial (e.g 'y  = ($2\pm1$) x + 1\pm 2' )
 
     Examples:
         >>> from sithom.curve import _label
