@@ -25,7 +25,7 @@ pip install sithom
 ├── README.md          <- The top-level README for developers using this project.
 ├── setup.py           <- Python setup up file for pip install.
 |
-├── sithom             <- package folder.
+├── sithom             <- Package folder.
 |   |
 │   ├── __init__.py    <- Init file.
 │   ├── _version.py    <- Key package information.
