@@ -42,7 +42,7 @@ def _return_func(param: unp.uarray, reg_type: str = "lin") -> Callable:
     Returns:
         Callable: Function.
 
-    Examples::
+    Example of returning the linear function::
         >>> from sithom.curve import _return_func
         >>> func = _return_func(unp.uarray([1, 2], [0.5, 1]), reg_type="lin")
     """
@@ -59,16 +59,10 @@ def _return_func(param: unp.uarray, reg_type: str = "lin") -> Callable:
     def cubic(x: Sequence[Flt]) -> np.array:
         return _cubic(np.array(x), param[0], param[1], param[2], param[3])
 
-    if reg_type == "lin":
-        return lin
-    elif reg_type == "lin0":
-        return lin_0
-    elif reg_type == "parab":
-        return parab
-    elif reg_type == "cubic":
-        return cubic
-    else:
-        assert False
+    func_dict = {"lin": lin, "lin0": lin_0, "parab": parab, "cubic": cubic}
+
+    assert reg_type in func_dict
+    return func_dict[reg_type]
 
 
 def fit(
