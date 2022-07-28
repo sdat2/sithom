@@ -178,6 +178,10 @@ def plot(
         ...                    [-0.1, 0.5, 1.0, 1.5, 2.3, 2.9, 3.5], 
         ...                    [-0.7, 0.1, 0.3, 1.1, 1.5, 2.3, 2.2]
         ...                   )
+        >>> "({:.3f}".format(param[0].n) + ", {:.3f})".format(param[0].s)
+        '(0.842, 0.078)'
+        >>> "({:.3f}".format(param[1].n) + ", {:.3f})".format(param[1].s)
+        '(-0.424, 0.161)'
     """
     param, func = fit(x_values, y_values, reg_type=reg_type)
     min_x_data = min(x_values)
