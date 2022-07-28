@@ -137,6 +137,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
         # "font.sans-serif": ["DejaVu Sans"],  # gets rid of error messages
         # "font.monospace": [],
         "figure.figsize": get_dim(),
+        "figure.autolayout": True, # turn on tight_layout.
         "lines.linewidth": 1.0,
         "scatter.marker": "X",
         "image.cmap": "viridis",
@@ -197,6 +198,8 @@ def label_subplots(
             >>> from sithom.plot import label_subplots
             >>> fig, axs = plt.subplots(2, 2)
             >>> label_subplots(axs, start_from=0, fontsize=10)
+            >>> fig, axs = plt.subplots(2, 2)
+            >>> label_subplots(axs, start_from=4, fontsize=10)
 
     """
     override_d = {"default": "inside", "outside": [-0.12, 1.12], "inside": [0.02, 0.95]}
@@ -303,6 +306,7 @@ def set_dim(
             >>> from sithom.plot import set_dim
             >>> fig, ax = plt.subplots(1, 1)
             >>> set_dim(fig, fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
+            # >>> fig.
 
     """
     fig.set_size_inches(

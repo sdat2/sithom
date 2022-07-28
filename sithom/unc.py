@@ -41,6 +41,8 @@ def tex_uf(
             '$\\\\left( 2.0 \\\\pm 0.1 \\\\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
+
+    TODO: Fix connsistency to get bullet points right.
     """
     # trying to deal with divide by zero possibility.
     if ufloat_input.n == 0.0:
