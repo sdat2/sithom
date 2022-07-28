@@ -55,7 +55,9 @@ def tex_uf(
         decimal_point = 0
     else:
         # ensure that 1 s.f for error means both agree on decimal points.
-        decimal_point = round(np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s)))
+        decimal_point = round(
+            np.log10(abs(ufloat_input.n)) - np.log10(abs(ufloat_input.s))
+        )
 
         # enforce rule that if it starts with a 1, add an extra decimal point.
 
