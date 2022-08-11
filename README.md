@@ -48,3 +48,4 @@ pip install sithom
  - `cmocean`
  - `xarray`
  - `uncertainties`
+ - `jupyterthemes`

@@ -129,8 +129,8 @@ def plot_units(
     Args:
         xr_da (Union[xr.DataArray, xr.Dataset]): Initial datarray/dataset
             (potentially with units for axes).
-        x_dim (str): Defaults to "longitude"
-        y_dim (str): Defaults to "latitude"
+        x_dim (str): Defaults to "longitude".
+        y_dim (str): Defaults to "latitude".
 
     Returns:
         Union[xr.DataArray, xr.Dataset]: Datarray/Dataset with correct
