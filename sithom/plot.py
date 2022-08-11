@@ -450,6 +450,8 @@ def lim(
     vmin = np.nanpercentile(npa, percentile)
     vmax = np.nanpercentile(npa, 100 - percentile)
 
+    assert vmax > vmin
+
     if balance:
         _balance(vmin, vmax)
 
