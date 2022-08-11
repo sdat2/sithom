@@ -1,5 +1,5 @@
 """Module to store the __version__ string etc."""
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __project__ = "Simon's utility scripts"
 __copyright__ = "2022, Simon Thomas"
 __author__ = "Simon Thomas"

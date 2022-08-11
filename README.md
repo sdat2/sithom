@@ -31,6 +31,7 @@ pip install sithom
 │   ├── _version.py    <- Key package information.
 │   ├── curve.py       <- Curve fitting w. uncertainty propogation.
 │   ├── misc.py        <- Miscellanious utilties.
+│   ├── place.py       <- Place objects.
 │   ├── plot.py        <- Plot utilties.
 │   ├── time.py        <- Time utilties.
 │   ├── unc.py         <- Uncertainties utilties.
