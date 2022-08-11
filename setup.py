@@ -18,6 +18,7 @@ REQUIRED = [
     "xarray",
     "uncertainties",
     "pooch",  # only for test tutorial.
+    "typeguard",
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
