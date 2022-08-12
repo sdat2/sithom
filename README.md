@@ -15,6 +15,12 @@ I realised I was copying functionality from project to project. So instead, here
 pip install sithom
 ```
 
+## Install using conda
+
+```txt
+conda install -c conda-forge sithom
+```
+
 ## Package structure
 
 ```txt
