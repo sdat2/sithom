@@ -57,4 +57,3 @@ conda install -c conda-forge sithom
  - `uncertainties`
  - `jupyterthemes`
  - `typeguard`
- - `pooch`

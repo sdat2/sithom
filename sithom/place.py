@@ -38,11 +38,11 @@ class BoundingBox:
         """
         Representation string.
         """
-        return [
+        return str([
             ("Latitude bounds", self.lat, "degrees_north"),
             ("Longitude bounds", self.lon, "degrees_east"),
             self.desc,
-        ]
+        ])
 
     def cartopy(self) -> List[float]:
         """
