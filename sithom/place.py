@@ -1,10 +1,8 @@
 """Place objects."""
 from typing import List
 import matplotlib.axes
-from typeguard import typechecked
 
 
-@typechecked
 class BoundingBox:
     """
     BoundingBox class to deal with the varying output requirments often needed to
@@ -83,7 +81,6 @@ class BoundingBox:
         ax.set_ylabel(self.lat)
 
 
-@typechecked
 class Point:
     def __init__(self, lon: float, lat: float) -> None:
         """

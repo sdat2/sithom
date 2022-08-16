@@ -4,6 +4,7 @@
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
+  noarch: python
 
 source:
   url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
@@ -23,7 +24,6 @@ requirements:
     - matplotlib
     - python >=3.8
     - seaborn
-    - typeguard
     - uncertainties
     - xarray
 

@@ -56,4 +56,3 @@ conda install -c conda-forge sithom
  - `xarray`
  - `uncertainties`
  - `jupyterthemes`
- - `typeguard`
