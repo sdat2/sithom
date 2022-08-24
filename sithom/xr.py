@@ -1,5 +1,5 @@
 """Xarray utilities module."""
-from typing import Union
+from typing import Union, Sequence
 import numpy as np
 import xarray as xr
 
@@ -60,20 +60,22 @@ def spatial_mean(
     
     timeseries_mean.plot.line()
     """
+    # make sure the datarray is the right way round.
+    dataarray = mon_increase(dataarray, x_dim=x_dim, y_dim=y_dim)
 
-    # Find mean temperature for each latitude
-    mean_sst_lat = dataarray.mean(dim=x_dim)
+    # Find mean for each latitude
+    mean_lat = dataarray.mean(dim=x_dim)
 
     # Find Weighted mean of those values
     # https://numpy.org/doc/stable/reference/generated/numpy.cos.html
     # https://numpy.org/doc/stable/reference/generated/numpy.radians.html
-    num = (np.cos(np.radians(dataarray[y_dim])) * mean_sst_lat).sum(dim=y_dim)
+    num = (np.cos(np.radians(dataarray[y_dim])) * mean_lat).sum(dim=y_dim)
     denom = np.sum(np.cos(np.radians(dataarray[y_dim])))
 
-    # Find mean global temperature
-    mean_temp = num / denom
+    # Find spatially weighted mean
+    mean = num / denom
 
-    return mean_temp
+    return mean
 
 
 def _latexify(units: str) -> str:
@@ -159,5 +161,40 @@ def plot_units(
     elif isinstance(xr_obj, xr.DataArray):
         if "units" in xr_obj.attrs:
             xr_obj.attrs["units"] = _latexify(xr_obj.attrs["units"])
+
+    return xr_obj
+
+
+def mon_increase(
+    xr_obj: Union[xr.Dataset, xr.DataArray], x_dim: str = "longitude", y_dim: str = "latitude",
+) -> Union[xr.Dataset, xr.DataArray]:
+    """Make sure that an xarray axes has monotonically increasing values.
+
+    Args:
+        xr_obj (Union[xr.Dataset, xr.DataArray]): 
+        x_dim (str, optional): x dimension name. Defaults to "longitude".
+        y_dim (str, optional): y dimension name. Defaults to "latitude".
+
+    Returns:
+        Union[xr.Dataset, xr.DataArray]: xarray object.
+
+    Examples::
+        >>> import xarray as xr
+        >>> da = xr.tutorial.open_dataset("air_temperature").air
+        >>> improved_da = mon_increase(da, x_dim="lon", y_dim="lat")
+
+    """
+
+    def positive_monotonic(indices: Sequence) -> bool:
+        return all(indices[i] <= indices[i + 1] for i in range(len(indices) - 1))
+
+    def negative_monotonic(indices: Sequence) -> bool:
+        return all(indices[i] >= indices[i + 1] for i in range(len(indices) - 1))
+
+    for var in [x_dim, y_dim]:
+        if negative_monotonic(xr_obj.coords[var].values):
+            xr_obj = xr_obj.reindex(**{var: xr_obj.coords[var][::-1]})
+        elif not positive_monotonic(xr_obj.coords[var].values):
+            assert False
 
     return xr_obj

@@ -1,6 +1,7 @@
 v0.0.3
  - Removed `typeguard` as a requirement.
  - Improved colormaps.
+ - Added `xr.mon_increase` function.
 v0.0.2
  - Added `places.py` with `BoundingBox` and `Point` objects.
  - Added `typeguard` as a requirement.
