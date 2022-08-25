@@ -4,10 +4,26 @@ sithom package
 Submodules
 ----------
 
+sithom.curve module
+-------------------
+
+.. automodule:: sithom.curve
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 sithom.misc module
 ------------------
 
 .. automodule:: sithom.misc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+sithom.place module
+-------------------
+
+.. automodule:: sithom.place
    :members:
    :undoc-members:
    :show-inheritance:
