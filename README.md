@@ -25,11 +25,13 @@ conda install -c conda-forge sithom
 
 ```txt
 
+├── CHANGELOG.txt      <- List of main changes at each new package version.
+├── CITATION.cff       <- File to allow you to easily cite this repository.
 ├── LICENSE            <- MIT Open software license.
 ├── Makefile           <- Makefile with commands.
 ├── pytest.ini         <- Enable doctest unit-tests.
 ├── README.md          <- The top-level README for developers using this project.
-├── setup.py           <- Python setup up file for pip install.
+├── setup.py           <- Python setup file for pip install.
 |
 ├── sithom             <- Package folder.
 |   |
