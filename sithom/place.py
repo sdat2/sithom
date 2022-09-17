@@ -36,11 +36,13 @@ class BoundingBox:
         """
         Representation string.
         """
-        return str([
-            ("Latitude bounds", self.lat, "degrees_north"),
-            ("Longitude bounds", self.lon, "degrees_east"),
-            self.desc,
-        ])
+        return str(
+            [
+                ("Latitude bounds", self.lat, "degrees_north"),
+                ("Longitude bounds", self.lon, "degrees_east"),
+                self.desc,
+            ]
+        )
 
     def cartopy(self) -> List[float]:
         """
@@ -82,16 +84,30 @@ class BoundingBox:
 
 
 class Point:
-    def __init__(self, lon: float, lat: float) -> None:
+    def __init__(self, lon: float, lat: float, desc: str = "NONE") -> None:
         """
         Initialise point.
 
         Args:
             lon (float): Longitude.
             lat (float): Latitude.
+            desc (str): description
         """
         self.lon = lon
         self.lat = lat
+        self.desc = desc
+
+    def __repr__(self) -> str:
+        """
+        Representation string.
+        """
+        return str(
+            [
+                ("Latitude", self.lat, "degrees_north"),
+                ("Longitude", self.lon, "degrees_east"),
+                self.desc,
+            ]
+        )
 
     def bbox(self, buffer: float = 3) -> BoundingBox:
         """
@@ -119,4 +135,5 @@ class Point:
         return BoundingBox(
             [self.lon - buffer, self.lon + buffer],
             [self.lat - buffer, self.lat + buffer],
+            desc="Bounding Box around point: " + self.desc,
         )

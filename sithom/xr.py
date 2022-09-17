@@ -166,7 +166,9 @@ def plot_units(
 
 
 def mon_increase(
-    xr_obj: Union[xr.Dataset, xr.DataArray], x_dim: str = "longitude", y_dim: str = "latitude",
+    xr_obj: Union[xr.Dataset, xr.DataArray],
+    x_dim: str = "longitude",
+    y_dim: str = "latitude",
 ) -> Union[xr.Dataset, xr.DataArray]:
     """Make sure that an xarray axes has monotonically increasing values.
 
