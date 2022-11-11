@@ -481,7 +481,7 @@ def pairplot(df: pd.DataFrame) -> None:
         corr = ma.corrcoef(ma.masked_invalid(x), ma.masked_invalid(y))
         corr_coeff = corr[0, 1]
         ax = ax or plt.gca()
-        ax.annotate(f"ρ = {corr_coeff:.2f}", xy=(0.1, 1.05), xycoords=ax.transAxes)
+        ax.annotate(f"ρ = {corr_coeff:.2f}", xy=(0.05, 1.0), xycoords=ax.transAxes)
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
