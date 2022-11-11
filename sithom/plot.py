@@ -44,7 +44,11 @@ from typing import Sequence, Tuple, Optional, Literal
 import itertools
 from shutil import which
 import numpy as np
+import numpy.ma as ma
+import pandas as pd
 import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
 import seaborn as sns
 from jupyterthemes import jtplot
 import cmocean
@@ -456,3 +460,29 @@ def lim(
         _balance(vmin, vmax)
 
     return (vmin, vmax)
+
+
+def pairplot(df: pd.DataFrame) -> None:
+    """
+    Improved seaborn pairplot from:
+
+    https://stackoverflow.com/a/50835066
+
+    Args:
+        df (pd.DataFrame): A data frame.
+    """
+
+    def corrfunc(x, y, ax=None, **kws) -> None:
+        """Plot the correlation coefficient in the
+           top left hand corner of a plot.
+
+        A function to use with seaborn's `map_lower` api.
+        """
+        corr = ma.corrcoef(ma.masked_invalid(x), ma.masked_invalid(y))
+        corr_coeff = corr[0, 1]
+        ax = ax or plt.gca()
+        ax.annotate(f"ρ = {corr_coeff:.2f}", xy=(0.1, 1.05), xycoords=ax.transAxes)
+
+    g = sns.pairplot(df, corner=True)
+    g.map_lower(corrfunc)
+    plt.show()

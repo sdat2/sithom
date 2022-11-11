@@ -15,6 +15,7 @@ REQUIRED = [
     "seaborn",
     "jupyterthemes",
     "cmocean",
+    "pandas",
     "xarray",
     "uncertainties",
     "pooch",  # only for test tutorial.
