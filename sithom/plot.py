@@ -485,4 +485,3 @@ def pairplot(df: pd.DataFrame) -> None:
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
-    plt.show()
