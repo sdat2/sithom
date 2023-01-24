@@ -105,8 +105,8 @@ class Point:
         Initialise point.
 
         Args:
-            lon (float): Longitude.
-            lat (float): Latitude.
+            lon (float): Longitude. Degrees East.
+            lat (float): Latitude. Degrees North.
             desc (str): description. Defaults to "No Description Given.".
         """
         self.lon = lon
