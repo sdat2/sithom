@@ -17,14 +17,14 @@ class BoundingBox:
         [30, -30, 10, 30]
     """
 
-    def __init__(self, lon: List[float], lat: List[float], desc: str = "NONE") -> None:
+    def __init__(self, lon: List[float], lat: List[float], desc: str = "No Description Given.") -> None:
         """
         Create BBOX.
 
         Args:
             lon (List[float]): Longitude bounds. Degrees East.
             lat (List[float]): Latitude bounds. Degrees North.
-            desc (str): Description of boundary box for debugging. Defaults to "None".
+            desc (str): Description of boundary box for debugging. Defaults to "No Description Given.".
         """
         assert len(lon) == 2
         assert len(lat) == 2
@@ -72,6 +72,7 @@ class BoundingBox:
         ax.set_xlim(self.lon)
         ax.set_ylim(self.lat)
 
+
     def ax_label(self, ax: matplotlib.axes.Axes) -> None:
         """
         Apply BoundingBox as labels to your graph.
@@ -82,16 +83,31 @@ class BoundingBox:
         ax.set_xlabel(self.lon)
         ax.set_ylabel(self.lat)
 
+    def pad(self, buffer: float = 1) -> "BoundingBox":
+        """
+        Pad the BoundingBox by some number of degrees.
+
+        Args:
+            buffer (float, optional): How many degrees East and North
+                to go out from existing buffer. Defaults to 1.
+
+        Returns:
+            BoundingBox: A bounding box that is padded by the buffer.
+        """
+        return BoundingBox([self.lon[0] - buffer, self.lon[1] + buffer], 
+                            [self.lat[0] - buffer, self.lat[1] + buffer], 
+                            desc=self.desc + " padded by " + str(buffer) + " degrees")
+
 
 class Point:
-    def __init__(self, lon: float, lat: float, desc: str = "NONE") -> None:
+    def __init__(self, lon: float, lat: float, desc: str = "No Description Given.") -> None:
         """
         Initialise point.
 
         Args:
             lon (float): Longitude.
             lat (float): Latitude.
-            desc (str): description
+            desc (str): description. Defaults to "No Description Given.".
         """
         self.lon = lon
         self.lat = lat
