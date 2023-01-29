@@ -1,4 +1,5 @@
 """Place objects."""
+import numpy as np
 from typing import List
 import matplotlib.axes
 
@@ -97,6 +98,23 @@ class BoundingBox:
         return BoundingBox([self.lon[0] - buffer, self.lon[1] + buffer], 
                             [self.lat[0] - buffer, self.lat[1] + buffer], 
                             desc=self.desc + " padded by " + str(buffer) + " degrees")
+
+    def indices_inside(self, lons: np.ndarray, lats: np.ndarray) -> np.ndarray:
+        """
+        Get indices of points inside the bounding box.
+
+        Args:
+            lons (np.ndarray): Longitudes of points to check.
+            lats (np.ndarray): Latitudes of points to check.
+
+        Returns:
+            np.ndarray: Indices of points inside the bounding box.
+        """
+        return np.where(
+            (lons >= self.lon[0])
+            & (lons <= self.lon[1])
+            & (lats >= self.lat[0])
+            & (lats <= self.lat[1]))
 
 
 class Point:
