@@ -103,6 +103,8 @@ class BoundingBox:
         """
         Get indices of points inside the bounding box.
 
+        Currently only works for 1D arrays.
+
         Args:
             lons (np.ndarray): Longitudes of points to check.
             lats (np.ndarray): Latitudes of points to check.
@@ -114,7 +116,7 @@ class BoundingBox:
             (lons >= self.lon[0])
             & (lons <= self.lon[1])
             & (lats >= self.lat[0])
-            & (lats <= self.lat[1]))
+            & (lats <= self.lat[1]))[0]
 
 
 class Point:
