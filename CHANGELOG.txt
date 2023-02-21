@@ -1,8 +1,12 @@
+v0.0.4
+ - Added `place.Point.desc` attribute.
+ - Added `place.BoundingBox.indices_inside` method.
+ - Added `place.BoundingBox.pad` method.
 v0.0.3
  - Removed `typeguard` as a requirement.
  - Improved colormaps.
  - Added `xr.mon_increase` function.
 v0.0.2
- - Added `places.py` with `BoundingBox` and `Point` objects.
+ - Added `place.py` with `BoundingBox` and `Point` objects.
  - Added `typeguard` as a requirement.
  - Added `sithom.plot.lim` with tests to allow percentile limits.
