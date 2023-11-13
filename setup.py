@@ -15,6 +15,8 @@ REQUIRED = [
     "seaborn",
     "jupyterthemes",
     "cmocean",
+    "numpy",
+    "scipy",
     "pandas",
     "xarray",
     "uncertainties",
