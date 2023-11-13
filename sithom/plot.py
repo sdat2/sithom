@@ -40,15 +40,15 @@ Example:
         label_subplots(axs, start_from=0, fontsize=10)
 
 """
-from typing import Sequence, Tuple, Optional, Literal
+from typing import Sequence, Tuple, Optional, Literal, List
 import itertools
 from shutil import which
 import numpy as np
 import numpy.ma as ma
 import pandas as pd
+import xarray as xr
 import matplotlib
 import matplotlib.pyplot as plt
-import seaborn as sns
 import seaborn as sns
 from jupyterthemes import jtplot
 import cmocean
@@ -147,8 +147,11 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
         "image.cmap": "viridis",
     }
     matplotlib.rcParams.update(p_general)
+
     # colorblind optimised colormap as default.
-    matplotlib.style.use("seaborn-colorblind")
+    preferred_style = "seaborn-colorblind"
+    if preferred_style in plt.style.available:
+        matplotlib.style.use(preferred_style)
 
     if use_tex and which("latex") is not None:
         p_setting = {
@@ -485,3 +488,73 @@ def pairplot(df: pd.DataFrame) -> None:
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
+
+
+def feature_grid(
+    ds: xr.Dataset,
+    fig_var: List[List[str]],
+    units: List[List[str]],
+    names: List[List[str]],
+    vlim: List[List[Tuple[float, float, str]]],
+    super_titles: List[str],
+    figsize: Tuple[float, float] = (12, 6), # in inches
+    label_size: int = 12,
+    supertitle_pos: Tuple[float, float] = (0.4, 1.3),
+) -> None:
+    """Feature grid plot.
+
+    Args:
+        ds (xr.Dataset): Input dataset with single timeslice of data on lon/lat grid.
+        fig_var (List[List[str]]): Figure variable names.
+        units (List[List[str]]): Units of variables.
+        names (List[List[str]]): Names of variables to plot.
+        vlim (List[List[Tuple[float, float, str]]]): Colorbar limits, and colorbar cmap.
+        super_titles (List[str]): The titles for each column.
+        figsize (Tuple[float, float], optional): Defaults to (12, 6).
+        label_size (int, optional): Defaults to 12.
+        supertitle_pos (Tuple[float, float], optional): Relative position for titles. Defaults to (0.4, 1.3).
+    """
+    shape = np.array(fig_var).shape
+    fig, axs = plt.subplots(*shape, sharex=True, sharey=True, figsize=figsize)
+    ckwargs = {
+        "label": "",
+        "format": axis_formatter(),
+        "extend": "neither",
+        "extendrect": False,
+        "extendfrac": 0,
+    }
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            ckwargs = {"label": "", "format": axis_formatter()}
+            if vlim[i][j] is None:
+                ds[fig_var[i][j]].plot(ax=axs[i, j], cbar_kwargs=ckwargs)
+            else:
+                ds[fig_var[i][j]].plot(
+                    ax=axs[i, j],
+                    vmin=vlim[i][j][0],
+                    vmax=vlim[i][j][1],
+                    cmap=vlim[i][j][2],
+                    cbar_kwargs=ckwargs,
+                )
+            axs[i, j].set_title("")
+            if units[i][j] != "":
+                axs[i, j].set_title(
+                    names[i][j] + "  [" + units[i][j] + "]" + "    ", size=label_size
+                )
+            else:
+                axs[i, j].set_title(names[i][j] + units[i][j], size=label_size)
+
+            axs[i, j].set_xlabel("")
+            axs[i, j].set_ylabel("")
+
+    def supertitle(j, title):
+        axs[0, j].text(
+            *supertitle_pos, title, transform=axs[0, j].transAxes, size=label_size + 5,
+        )  # , verticalalignment='center', rotation=270)
+
+    for i, title in enumerate(super_titles):
+        supertitle(i, title)
+
+    if "time" in ds:
+        print(ds.time.values)
+        fig.suptitle(ds.time.values)
