@@ -44,7 +44,7 @@ def time_limit(seconds: int) -> None:
             Timed out!
 
     Seems not to work for windows:
-    
+
     https://github.com/sdat2/sithom/runs/7343392694?check_suite_focus=true
 
     """

@@ -240,7 +240,7 @@ def label_subplots(
 def get_dim(
     width: float = REPORT_WIDTH,
     fraction_of_line_width: float = 1,
-    ratio: float = (5 ** 0.5 - 1) / 2,
+    ratio: float = (5**0.5 - 1) / 2,
 ) -> Tuple[float, float]:
     """Return figure height, width in inches to avoid scaling in latex.
 
@@ -287,7 +287,7 @@ def set_dim(
     fig: matplotlib.figure.Figure,
     width: float = REPORT_WIDTH,
     fraction_of_line_width: float = 1,
-    ratio: float = (5 ** 0.5 - 1) / 2,
+    ratio: float = (5**0.5 - 1) / 2,
 ) -> None:
     """Set aesthetic figure dimensions to avoid scaling in latex.
 
@@ -313,7 +313,7 @@ def set_dim(
             >>> from sithom.plot import set_dim
             >>> fig, ax = plt.subplots(1, 1)
             >>> set_dim(fig, fraction_of_line_width=1, ratio=(5 ** 0.5 - 1) / 2)
- 
+
     """
     fig.set_size_inches(
         get_dim(width=width, fraction_of_line_width=fraction_of_line_width, ratio=ratio)
@@ -438,7 +438,7 @@ def lim(
         npa (np.ndarray): A numpy ndarray with values in, including nans.
         percentile (float, optional): Ignoring nans, use 5th and 95th percentile. Defaults to "5perc".
         balance (bool, optional): Whether to balance limits around zero.
-    
+
     Returns:
         Tuple[float, float]: (vmin, vmax)
 
@@ -497,7 +497,7 @@ def feature_grid(
     names: List[List[str]],
     vlim: List[List[Tuple[float, float, str]]],
     super_titles: List[str],
-    figsize: Tuple[float, float] = (12, 6), # in inches
+    figsize: Tuple[float, float] = (12, 6),  # in inches
     label_size: int = 12,
     supertitle_pos: Tuple[float, float] = (0.4, 1.3),
 ) -> None:
@@ -516,6 +516,10 @@ def feature_grid(
     """
     shape = np.array(fig_var).shape
     fig, axs = plt.subplots(*shape, sharex=True, sharey=True, figsize=figsize)
+    if shape[0] == 1:
+        axs = np.array([axs])
+    if shape[1] == 1:
+        axs = np.array([axs]).T
     ckwargs = {
         "label": "",
         "format": axis_formatter(),
@@ -527,9 +531,14 @@ def feature_grid(
         for j in range(shape[1]):
             ckwargs = {"label": "", "format": axis_formatter()}
             if vlim[i][j] is None:
-                ds[fig_var[i][j]].plot(ax=axs[i, j], cbar_kwargs=ckwargs)
+                ds[fig_var[i][j]].plot(
+                    # x="lon", y="lat",
+                    ax=axs[i, j],
+                    cbar_kwargs=ckwargs,
+                )
             else:
                 ds[fig_var[i][j]].plot(
+                    # x="lon", y="lat",
                     ax=axs[i, j],
                     vmin=vlim[i][j][0],
                     vmax=vlim[i][j][1],
@@ -537,19 +546,22 @@ def feature_grid(
                     cbar_kwargs=ckwargs,
                 )
             axs[i, j].set_title("")
-            if units[i][j] != "":
+            if units[i][j] == "" or units[i][j] is None:
+                axs[i, j].set_title(names[i][j], size=label_size)
+            else:
                 axs[i, j].set_title(
                     names[i][j] + "  [" + units[i][j] + "]" + "    ", size=label_size
                 )
-            else:
-                axs[i, j].set_title(names[i][j] + units[i][j], size=label_size)
 
             axs[i, j].set_xlabel("")
             axs[i, j].set_ylabel("")
 
     def supertitle(j, title):
         axs[0, j].text(
-            *supertitle_pos, title, transform=axs[0, j].transAxes, size=label_size + 5,
+            *supertitle_pos,
+            title,
+            transform=axs[0, j].transAxes,
+            size=label_size + 5,
         )  # , verticalalignment='center', rotation=270)
 
     for i, title in enumerate(super_titles):

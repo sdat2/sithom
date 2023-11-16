@@ -18,7 +18,9 @@ class BoundingBox:
         [30, -30, 10, 30]
     """
 
-    def __init__(self, lon: List[float], lat: List[float], desc: str = "No Description Given.") -> None:
+    def __init__(
+        self, lon: List[float], lat: List[float], desc: str = "No Description Given."
+    ) -> None:
         """
         Create BBOX.
 
@@ -73,7 +75,6 @@ class BoundingBox:
         ax.set_xlim(self.lon)
         ax.set_ylim(self.lat)
 
-
     def ax_label(self, ax: matplotlib.axes.Axes) -> None:
         """
         Apply BoundingBox as labels to your graph.
@@ -95,9 +96,11 @@ class BoundingBox:
         Returns:
             BoundingBox: A bounding box that is padded by the buffer.
         """
-        return BoundingBox([self.lon[0] - buffer, self.lon[1] + buffer], 
-                            [self.lat[0] - buffer, self.lat[1] + buffer], 
-                            desc=self.desc + " padded by " + str(buffer) + " degrees")
+        return BoundingBox(
+            [self.lon[0] - buffer, self.lon[1] + buffer],
+            [self.lat[0] - buffer, self.lat[1] + buffer],
+            desc=self.desc + " padded by " + str(buffer) + " degrees",
+        )
 
     def indices_inside(self, lons: np.ndarray, lats: np.ndarray) -> np.ndarray:
         """
@@ -116,11 +119,14 @@ class BoundingBox:
             (lons >= self.lon[0])
             & (lons <= self.lon[1])
             & (lats >= self.lat[0])
-            & (lats <= self.lat[1]))[0]
+            & (lats <= self.lat[1])
+        )[0]
 
 
 class Point:
-    def __init__(self, lon: float, lat: float, desc: str = "No Description Given.") -> None:
+    def __init__(
+        self, lon: float, lat: float, desc: str = "No Description Given."
+    ) -> None:
         """
         Initialise point.
 

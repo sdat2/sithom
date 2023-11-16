@@ -102,5 +102,7 @@ setup(
         "Typing :: Typed",
     ],
     python_requires=">=3.8",
-    cmdclass={"upload": UploadCommand,},
+    cmdclass={
+        "upload": UploadCommand,
+    },
 )

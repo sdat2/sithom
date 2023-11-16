@@ -57,7 +57,7 @@ def spatial_mean(
         >>> from sithom.xr import spatial_mean
         >>> da = xr.tutorial.open_dataset("air_temperature").air
         >>> timeseries_mean = spatial_mean(da, x_dim="lon", y_dim="lat")
-    
+
     timeseries_mean.plot.line()
     """
     # make sure the datarray is the right way round.
@@ -173,7 +173,7 @@ def mon_increase(
     """Make sure that an xarray axes has monotonically increasing values.
 
     Args:
-        xr_obj (Union[xr.Dataset, xr.DataArray]): 
+        xr_obj (Union[xr.Dataset, xr.DataArray]):
         x_dim (str, optional): x dimension name. Defaults to "longitude".
         y_dim (str, optional): y dimension name. Defaults to "latitude".
 

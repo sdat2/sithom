@@ -13,12 +13,12 @@ Flt = Union[float, ufloat]
 
 def _cubic(x: float, a: Flt, b: Flt, c: Flt, d: Flt) -> Flt:
     """Fit cubic curve to data"""
-    return a * (x ** 3) + b * (x ** 2) + c * x + d
+    return a * (x**3) + b * (x**2) + c * x + d
 
 
 def _parab(x: float, a: Flt, b: Flt, c: Flt) -> Flt:
     """Fit parabola to data."""
-    return a * (x ** 2) + b * x + c
+    return a * (x**2) + b * x + c
 
 
 def _lin(x: float, a: Flt, b: Flt) -> Flt:
@@ -169,7 +169,7 @@ def plot(
     Example::
         >>> from sithom.curve import plot
         >>> param, func = plot(
-        ...                    [-0.1, 0.5, 1.0, 1.5, 2.3, 2.9, 3.5], 
+        ...                    [-0.1, 0.5, 1.0, 1.5, 2.3, 2.9, 3.5],
         ...                    [-0.7, 0.1, 0.3, 1.1, 1.5, 2.3, 2.2]
         ...                   )
         >>> "({:.3f}".format(param[0].n) + ", {:.3f})".format(param[0].s)
@@ -203,7 +203,9 @@ def plot(
 
     if len(param) >= 3:
         plt.legend(
-            bbox_to_anchor=(-0.15, 1.02, 1.15, 0.102), loc="lower left", mode="expand",
+            bbox_to_anchor=(-0.15, 1.02, 1.15, 0.102),
+            loc="lower left",
+            mode="expand",
         )
     else:
         plt.legend()
