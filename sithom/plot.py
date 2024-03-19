@@ -461,7 +461,7 @@ def lim(
     assert vmax > vmin
 
     if balance:
-        _balance(vmin, vmax)
+        vmin, vmax = _balance(vmin, vmax)
 
     return (vmin, vmax)
 
@@ -516,6 +516,9 @@ def feature_grid(
         label_size (int, optional): Defaults to 12.
         supertitle_pos (Tuple[float, float], optional): Relative position for titles. Defaults to (0.4, 1.3).
         xy (Optional[Tuple[Tuple[str, str, str], Tuple[str, str, str]]], optional): coord name, display name, unit. Defaults to None.
+
+    Returns:
+        Tuple[matplotlib.figure.Figure, np.ndarray]: The figure and axes.
     """
     shape = np.array(fig_var).shape
     fig, axs = plt.subplots(*shape, sharex=True, sharey=True, figsize=figsize)
