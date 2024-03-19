@@ -40,6 +40,7 @@ Example:
         label_subplots(axs, start_from=0, fontsize=10)
 
 """
+
 from typing import Sequence, Tuple, Optional, Literal, List
 import itertools
 from shutil import which
@@ -500,7 +501,8 @@ def feature_grid(
     figsize: Tuple[float, float] = (12, 6),  # in inches
     label_size: int = 12,
     supertitle_pos: Tuple[float, float] = (0.4, 1.3),
-) -> None:
+    xy: Optional[Tuple[Tuple[str, str, str], Tuple[str, str, str]]] = None,
+) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """Feature grid plot.
 
     Args:
@@ -513,6 +515,7 @@ def feature_grid(
         figsize (Tuple[float, float], optional): Defaults to (12, 6).
         label_size (int, optional): Defaults to 12.
         supertitle_pos (Tuple[float, float], optional): Relative position for titles. Defaults to (0.4, 1.3).
+        xy (Optional[Tuple[Tuple[str, str, str], Tuple[str, str, str]]], optional): coord name, display name, unit. Defaults to None.
     """
     shape = np.array(fig_var).shape
     fig, axs = plt.subplots(*shape, sharex=True, sharey=True, figsize=figsize)
@@ -531,20 +534,37 @@ def feature_grid(
         for j in range(shape[1]):
             ckwargs = {"label": "", "format": axis_formatter()}
             if vlim[i][j] is None:
-                ds[fig_var[i][j]].plot(
-                    # x="lon", y="lat",
-                    ax=axs[i, j],
-                    cbar_kwargs=ckwargs,
-                )
+                if xy is not None:
+                    ds[fig_var[i][j]].plot(
+                        x=xy[0][0],
+                        y=xy[1][0],
+                        ax=axs[i, j],
+                        cbar_kwargs=ckwargs,
+                    )
+                else:
+                    ds[fig_var[i][j]].plot(
+                        ax=axs[i, j],
+                        cbar_kwargs=ckwargs,
+                    )
             else:
-                ds[fig_var[i][j]].plot(
-                    # x="lon", y="lat",
-                    ax=axs[i, j],
-                    vmin=vlim[i][j][0],
-                    vmax=vlim[i][j][1],
-                    cmap=vlim[i][j][2],
-                    cbar_kwargs=ckwargs,
-                )
+                if xy is not None:
+                    ds[fig_var[i][j]].plot(
+                        x=xy[0][0],
+                        y=xy[1][0],
+                        ax=axs[i, j],
+                        vmin=vlim[i][j][0],
+                        vmax=vlim[i][j][1],
+                        cmap=vlim[i][j][2],
+                        cbar_kwargs=ckwargs,
+                    )
+                else:
+                    ds[fig_var[i][j]].plot(
+                        ax=axs[i, j],
+                        vmin=vlim[i][j][0],
+                        vmax=vlim[i][j][1],
+                        cmap=vlim[i][j][2],
+                        cbar_kwargs=ckwargs,
+                    )
             axs[i, j].set_title("")
             if units[i][j] == "" or units[i][j] is None:
                 axs[i, j].set_title(names[i][j], size=label_size)
@@ -552,9 +572,14 @@ def feature_grid(
                 axs[i, j].set_title(
                     names[i][j] + "  [" + units[i][j] + "]" + "    ", size=label_size
                 )
-
             axs[i, j].set_xlabel("")
             axs[i, j].set_ylabel("")
+
+    if xy is not None:
+        for i in range(shape[1]):
+            axs[shape[0] - 1, i].set_xlabel(xy[0][1] + " [" + xy[0][2] + "]")
+        for j in range(shape[0]):
+            axs[j, 0].set_ylabel(xy[1][1] + " [" + xy[1][2] + "]")
 
     def supertitle(j, title):
         axs[0, j].text(
@@ -570,3 +595,5 @@ def feature_grid(
     if "time" in ds:
         print(ds.time.values)
         fig.suptitle(ds.time.values)
+
+    return fig, axs
