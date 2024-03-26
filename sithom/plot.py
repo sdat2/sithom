@@ -522,20 +522,19 @@ def feature_grid(
     """
     shape = np.array(fig_var).shape
     fig, axs = plt.subplots(*shape, sharex=True, sharey=True, figsize=figsize)
-    if shape[0] == 1:
+    if shape[0] == 1:  # expects 2D array
         axs = np.array([axs])
     if shape[1] == 1:
         axs = np.array([axs]).T
-    ckwargs = {
-        "label": "",
-        "format": axis_formatter(),
-        "extend": "neither",
-        "extendrect": False,
-        "extendfrac": 0,
-    }
     for i in range(shape[0]):
         for j in range(shape[1]):
-            ckwargs = {"label": "", "format": axis_formatter()}
+            ckwargs = {
+                "label": "",
+                "format": axis_formatter(),
+                "extend": "neither",
+                "extendrect": False,
+                "extendfrac": 0,
+            }
             if vlim[i][j] is None:
                 if xy is not None:
                     ds[fig_var[i][j]].plot(
@@ -578,7 +577,7 @@ def feature_grid(
             axs[i, j].set_xlabel("")
             axs[i, j].set_ylabel("")
 
-    if xy is not None:
+    if xy is not None:  # label x and y axes
         for i in range(shape[1]):
             axs[shape[0] - 1, i].set_xlabel(xy[0][1] + " [" + xy[0][2] + "]")
         for j in range(shape[0]):
