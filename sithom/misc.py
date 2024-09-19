@@ -1,6 +1,8 @@
 """Miscillanious Utilities Module."""
+
 import inspect
 from sys import getsizeof
+import subprocess
 
 
 def in_notebook() -> bool:
@@ -133,3 +135,12 @@ def get_byte_size(obj: object) -> str:
         >>> assert isinstance(get_byte_size(np.zeros(int(10e4))), str)
     """
     return human_readable_size(calculate_byte_size_recursively(obj))
+
+
+def get_git_revision_hash() -> str:
+    """Get the git revision hash.
+
+    Returns:
+        str: The git revision hash.
+    """
+    return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
