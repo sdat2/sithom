@@ -1,4 +1,5 @@
 """setup.py allows the installation of the project by pip."""
+
 import os
 import sys
 from shutil import rmtree
@@ -19,6 +20,7 @@ REQUIRED = [
     "scipy",
     "pandas",
     "xarray",
+    "xarray < 2024.3",  # while https://github.com/pydata/xarray/issues/8909 is not solved
     "uncertainties",
     "pooch",  # only for test tutorial.
 ]
