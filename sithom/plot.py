@@ -427,7 +427,7 @@ def _balance(vmin: float, vmax: float) -> Tuple[float, float]:
         (-1.0, 1.0)
     """
     assert vmax > vmin
-    return np.min([-vmax, vmin]), np.max([-vmin, vmax])
+    return float(np.min([-vmax, vmin])), float(np.max([-vmin, vmax]))
 
 
 def lim(
@@ -450,9 +450,9 @@ def lim(
         >>> vmin, vmax = lim(samples)
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
         (-1.6, 1.6)
-        >>> vmin, vmax = lim(samples, balance=True)
+        >>> vmin, vmax = lim(samples + 0.3, balance=True)
         >>> print("({:.1f},".format(vmin), "{:.1f})".format(vmax))
-        (-1.6, 1.6)
+        (-1.9, 1.9)
     """
 
     vmin = np.nanpercentile(npa, percentile)
