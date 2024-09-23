@@ -463,7 +463,7 @@ def lim(
     if balance:
         vmin, vmax = _balance(vmin, vmax)
 
-    return (vmin, vmax)
+    return (float(vmin), float(vmax))
 
 
 def pairplot(df: pd.DataFrame) -> None:
@@ -471,6 +471,8 @@ def pairplot(df: pd.DataFrame) -> None:
     Improved seaborn pairplot from:
 
     https://stackoverflow.com/a/50835066
+
+    TODO: Add option for subplot labels (a), (b), (c) etc.
 
     Args:
         df (pd.DataFrame): A data frame.
