@@ -12,6 +12,14 @@ sithom.curve module
    :undoc-members:
    :show-inheritance:
 
+sithom.io module
+----------------
+
+.. automodule:: sithom.io
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 sithom.misc module
 ------------------
 
