@@ -38,7 +38,8 @@ conda install -c conda-forge sithom
 │   ├── __init__.py    <- Init file.
 │   ├── _version.py    <- Key package information.
 │   ├── curve.py       <- Curve fitting w. uncertainty propogation.
-│   ├── misc.py        <- Miscellanious utilties.
+│   ├── io.py          <- Input output functions (json).
+│   ├── misc.py        <- Miscellanious utilities.
 │   ├── place.py       <- Place objects.
 │   ├── plot.py        <- Plot utilties.
 │   ├── time.py        <- Time utilties.

@@ -1,4 +1,5 @@
 """Xarray utilities module."""
+
 from typing import Union, Sequence
 import numpy as np
 import xarray as xr
@@ -45,11 +46,11 @@ def spatial_mean(
 
     Args:
         da (xr.DataArray): da to average.
-        x_dim: The longitude dimension name. Defaults to "longitude".
-        y_dim: The latitude dimension name. Defaults to "latitude".
+        x_dim (str): The longitude dimension name. Defaults to "longitude".
+        y_dim (str): The latitude dimension name. Defaults to "latitude".
 
     Returns:
-        xr.DataArray: Avarage of da.
+        xr.DataArray: Spatial average of da.
 
     Example of calculating and plotting mean timeseries of dataarray::
 
@@ -58,7 +59,6 @@ def spatial_mean(
         >>> da = xr.tutorial.open_dataset("air_temperature").air
         >>> timeseries_mean = spatial_mean(da, x_dim="lon", y_dim="lat")
 
-    timeseries_mean.plot.line()
     """
     # make sure the datarray is the right way round.
     dataarray = mon_increase(dataarray, x_dim=x_dim, y_dim=y_dim)
@@ -95,7 +95,7 @@ def _latexify(units: str) -> str:
         >>> _latexify("kg m s**-2")
         'kg m s$^{-2}$'
         >>> _latexify("degree_Celsius")
-        '$^{\\\\circ}$C'
+        '$^{\\circ}$C'
         >>> _latexify("degK")
         'K'
 

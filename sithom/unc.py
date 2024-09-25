@@ -1,4 +1,5 @@
 """Uncertainties Utilities Module."""
+
 import numpy as np
 import matplotlib
 from uncertainties import ufloat
@@ -31,14 +32,14 @@ def tex_uf(
         >>> from sithom.unc import tex_uf
         >>> uf = ufloat(1, 0.5)
         >>> tex_uf(uf, bracket=True, force_latex=True)
-            '$\\\\left( 1.0 \\\\pm 0.5 \\\\right)$'
+            '$\\left( 1.0 \\pm 0.5 \\right)$'
         >>> uf = ufloat(10, 5)
         >>> tex_uf(uf, bracket=True, force_latex=True)
-            '$\\\\left( \\\\left(1.0 \\\\pm 0.5\\\\right) \\\\times 10^{1} \\\\right)$'
+            '$\\left( \\left(1.0 \\pm 0.5\\right) \\times 10^{1} \\right)$'
         >>> tex_uf(ufloat(0.0, 0.0), bracket=True, force_latex=True) # works weirdly
-            '$\\\\left( 0.0 \\\\pm 0 \\\\right)$'
+            '$\\left( 0.0 \\pm 0 \\right)$'
         >>> tex_uf(ufloat(2, 0.06), bracket=True, force_latex=True)
-            '$\\\\left( 2.0 \\\\pm 0.1 \\\\right)$'
+            '$\\left( 2.0 \\pm 0.1 \\right)$'
 
     (Had to add twice as many backslashes for pytest to run.)
 

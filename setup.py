@@ -85,9 +85,6 @@ setup(
     include_package_data=True,
     install_requires=REQUIRED,
     license="MIT",
-    # test_suite=str(NAME +".tests.test_all.suite"),
-    # setup_requires=["pytest-runner"],
-    # package_dir={"": NAME},
     tests_require=["pytest", "pooch"],
     classifiers=[
         "Development Status :: 3 - Alpha",

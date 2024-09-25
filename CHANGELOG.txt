@@ -1,3 +1,5 @@
+v0.1.0
+ - Added `io` module for jsons.
 v0.0.5
  - Added `plot.feature_grid'.
  - Added existence check when setting `matplotlib` style in `plot.plot_defaults'.
