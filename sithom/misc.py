@@ -1,5 +1,6 @@
 """Miscillanious Utilities Module."""
 
+from typing import Optional
 import inspect
 from sys import getsizeof
 import subprocess
@@ -137,10 +138,18 @@ def get_byte_size(obj: object) -> str:
     return human_readable_size(calculate_byte_size_recursively(obj))
 
 
-def get_git_revision_hash() -> str:
+def get_git_revision_hash(path: Optional[str] = None) -> str:
     """Get the git revision hash.
+
+    Args:
+        path (Optional[str], optional): The path to the git repository. Defaults to None.
+            If None then check use current path.
 
     Returns:
         str: The git revision hash.
     """
-    return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
+    git_command = ["git", "rev-parse", "HEAD"]
+    if path:
+        # Add the --git-dir option if a path is provided
+        git_command = ["git", "--git-dir", f"{path}/.git", "rev-parse", "HEAD"]
+    return subprocess.check_output(git_command).decode("ascii").strip()
