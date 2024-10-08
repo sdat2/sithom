@@ -4,7 +4,7 @@ sphinx_autodoc_typehints
 sphinx_rtd_theme
 sphinx-markdown-tables
 recommonmark
-nbsphinx==0.8.7
+nbsphinx>0.8.7
 nbsphinx_link
 pandoc
 mathjax

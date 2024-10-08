@@ -11,19 +11,19 @@ I realised I was copying functionality from project to project. So instead, here
 
 ## Install using pip
 
-```txt
+```bash
 pip install sithom
 ```
 
 ## Install using conda
 
-```txt
+```bash
 conda install -c conda-forge sithom
 ```
 
 ## Package structure
 
-```txt
+```text
 
 ├── CHANGELOG.txt      <- List of main changes at each new package version.
 ├── CITATION.cff       <- File to allow you to easily cite this repository.

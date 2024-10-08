@@ -26,14 +26,11 @@ To update the module references in the rst files
 sphinx-apidoc -f -o . ..
 ```
 
-```bash
-sphinx-apidoc -f -o . ../ocean/SRC/
-```
 
 ## Symbolic links
 
-`docs/README.md` and `docs/gifs/`
+`docs/MAIN_README.md` 
 
-are both symbolic links to items in the main directory.
+is a symbolic link to items in the main directory.
 
 This was done to trick sphinx into working, and seems to have worked so far.
