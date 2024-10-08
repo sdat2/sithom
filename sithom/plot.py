@@ -173,7 +173,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
 # pylint: disable=too-many-arguments
 def label_subplots(
     axs: Sequence[matplotlib.axes.Axes],
-    labels: Sequence[str] = [chr(ord("`") + z) for z in range(1, 27)],
+    labels: Sequence[str] = [chr(ord("`") + z) for z in range(1, 100)],
     start_from: int = 0,
     fontsize: int = 10,
     x_pos: float = 0.02,
@@ -466,13 +466,19 @@ def lim(
     return (float(vmin), float(vmax))
 
 
-def _pairplot_ds(ds: xr.Dataset, vars: Optional[List[str]] = False, label: bool = False) -> None:
+def _pairplot_ds(ds: xr.Dataset, 
+                 vars: Optional[List[str]] = False, 
+                 label: bool = False,
+                 ) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """_pairplot_ds for xarray Dataset.
     
     Args:
         ds (xr.Dataset): Dataset to plot.
         vars (Optional[List[str]], optional): Variables to plot. Defaults to False.
         label (bool, optional): Whether to label the subplots. Defaults to False.
+
+    Returns:
+        Tuple[matplotlib.figure.Figure, np.ndarray]: The figure and axes.
     """
     vars = vars if vars else list(ds.data_vars)
     ds = ds[vars]
@@ -487,12 +493,13 @@ def _pairplot_ds(ds: xr.Dataset, vars: Optional[List[str]] = False, label: bool 
             rn_dict[var] += " [" + ds[var].attrs["units"] + "]"
             
     df = ds.rename(rn_dict).to_dataframe()[list(rn_dict.values())]
-    pairplot(df, label=label)
+    return pairplot(df, label=label)
 
 
 def pairplot(inp: Union[xr.Dataset, pd.DataFrame], 
              vars: Optional[List[str]] = None, 
-             label: bool = False) -> None:
+             label: bool = False
+             ) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """
     Improved seaborn pairplot from:
 
@@ -504,6 +511,9 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
         inp (Union[xr.Dataset, pd.DataFrame]): A dataset or dataframe to plot.
         vars (Optional[List[str]], optional): Variables to plot. Defaults to None.
         label (bool, optional): Whether to label the subplots. Defaults to False.
+
+    Returns:
+        Tuple[matplotlib.figure.Figure, np.ndarray]: The figure and axes.
     """
     if isinstance(inp, xr.Dataset):
         return _pairplot_ds(inp, vars=vars, label=label)
@@ -528,15 +538,27 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
 
-    def get_ax(x, y, ax=None, **kws) -> None:
+    def get_ax_lower(x, y, ax=None, **kws) -> None:
         nonlocal ax_list
         ax = ax or plt.gca()
         ax_list.append(ax)
 
+    i = -1
+    j = -1
+    def get_ax_diag(x, ax=None, **kws) -> None:
+        nonlocal i
+        nonlocal j
+        nonlocal ax_list
+        i += 1 
+        j += 1 + i
+        ax = ax or plt.gca()
+        ax_list.insert(j, ax)
+
+    g.map_lower(get_ax_lower)
+    g.map_diag(get_ax_diag)
     if label:
-        g.map_lower(get_ax)
-        # g.map_diag(get_ax)
-        label_subplots(ax_list, start_from=0, fontsize=10, x_pos=0.06, y_pos=1.03)#, override="outside")
+        label_subplots(ax_list, start_from=0, fontsize=10, x_pos=0.06, y_pos=1.03)
+    return plt.gcf(), ax_list
 
 
 def feature_grid(

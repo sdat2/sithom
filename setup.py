@@ -11,7 +11,7 @@ NAME = "sithom"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-REQUIRED = [
+REQUIRED: List[str] = [
     "matplotlib",
     "seaborn",
     "jupyterthemes",
@@ -23,7 +23,7 @@ REQUIRED = [
     "xarray < 2024.3",  # while https://github.com/pydata/xarray/issues/8909 is not solved
     "uncertainties",
     "pooch",  # only for test tutorial.
-]
+    ]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -81,7 +81,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=str("https://github.com/sdat2/" + NAME),
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    packages=find_packages(exclude=["tests", 
+                                    "*.tests",
+                                    "*.tests.*",
+                                    "tests.*"]),
     include_package_data=True,
     install_requires=REQUIRED,
     license="MIT",
@@ -95,6 +98,8 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3 :: Only",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
