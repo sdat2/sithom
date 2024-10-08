@@ -173,7 +173,7 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
 # pylint: disable=too-many-arguments
 def label_subplots(
     axs: Sequence[matplotlib.axes.Axes],
-    labels: Sequence[str] = [chr(ord("`") + z) for z in range(1, 100)],
+    labels: Sequence[str] = [chr(ord("a") + z) for z in range(0, 26)] + [chr(ord("A") + z) for z in range(0, 26)],
     start_from: int = 0,
     fontsize: int = 10,
     x_pos: float = 0.02,
@@ -505,7 +505,11 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
 
     https://stackoverflow.com/a/50835066
 
-    TODO: Improve option for subplot labels (a), (b), (c) etc.
+    The lower triangle of the pairplot shows the scatter plots with the 
+    correlation coefficient annotated in the top middle of each subplot.
+    The diagonal shows the distribution of each of the variables.
+    The upper triangle is empty.
+    The axs are returned in a 1D array.
 
     Args:
         inp (Union[xr.Dataset, pd.DataFrame]): A dataset or dataframe to plot.
@@ -518,7 +522,10 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
     if isinstance(inp, xr.Dataset):
         return _pairplot_ds(inp, vars=vars, label=label)
     elif isinstance(inp, pd.DataFrame):
-        df = inp
+        if vars:
+            df = inp[vars]
+        else:
+            df = inp
     else:
         raise ValueError("Input must be a pandas DataFrame or xarray Dataset.")
 
