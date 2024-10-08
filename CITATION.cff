@@ -5,7 +5,7 @@ authors:
     given-names: Simon Donald Alistair
     orcid: https://orcid.org/0000-0001-7911-1659
 title: Sithom's Scientific Python Utilities Package
-version: v0.1.0
+version: v0.1.1
 doi: 10.5281/zenodo.7020109
 url: "https://github.com/sdat2/sithom"
-date-released: 2024-09-25
+date-released: 2024-10-08
