@@ -41,7 +41,7 @@ Example:
 
 """
 
-from typing import Sequence, Tuple, Optional, Literal, List, Union
+from typing import Sequence, Tuple, Optional, Literal, List, Union, Callable
 import itertools
 from shutil import which
 import numpy as np
@@ -53,7 +53,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from jupyterthemes import jtplot
 import cmocean
-from sithom.misc import in_notebook
+from uncertainties import unumpy as unp, ufloat
+from .misc import in_notebook
+from .curve import fit, label_poly
+
 
 
 REPORT_WIDTH: float = 398.3386  # in pixels
@@ -533,7 +536,7 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
 
     def corrfunc(x, y, ax=None, **kws) -> None:
         """Plot the correlation coefficient in the
-           top left hand corner of a plot.
+           top middle of a plot.
 
         A function to use with seaborn's `map_lower` api.
         """
@@ -541,9 +544,29 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
         corr_coeff = corr[0, 1]
         ax = ax or plt.gca()
         ax.annotate(f"ρ = {corr_coeff:.2f}", xy=(0.35, 1.0), xycoords=ax.transAxes)
+    
+    # let's also work out the linear regression coefficient using the curve fit
+
+    def gradfunc(x, y, ax=None, **kws) -> None:
+        """Plot the linear regression coefficient in the
+           top middle of a plot.
+
+        A function to use with seaborn's `map_lower` api.
+        """
+        xt, yt = x[~np.isnan(x)], y[~np.isnan(x)]
+        xt, yt = xt[~np.isnan(y)], yt[~np.isnan(y)]
+        # normalize the data between 0 and 10
+        xrange = np.max(xt) - np.min(xt)
+        yrange = np.max(yt) - np.min(yt)
+        xt = (xt - np.min(xt)) / xrange * 10
+        yt = (yt - np.min(yt)) / yrange * 10
+        param, _ = fit(xt, yt) # defaults to y=mx+c fit
+        ax = ax or plt.gca()
+        ax.annotate("$m={:.2eL}$".format(param[0]*yrange/xrange), xy=(0.35, 0.01), xycoords=ax.transAxes)
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
+    g.map_lower(gradfunc)
 
     def get_ax_lower(x, y, ax=None, **kws) -> None:
         nonlocal ax_list
@@ -589,7 +612,7 @@ def feature_grid(
         names (List[List[str]]): Names of variables to plot.
         vlim (List[List[Tuple[float, float, str]]]): Colorbar limits, and colorbar cmap.
         super_titles (List[str]): The titles for each column.
-        figsize (Tuple[float, float], optional): Defaults to (12, 6).
+        figsize (Tuple[float, float], optional): Defaults to (12, 6). x, y in inches.
         label_size (int, optional): Defaults to 12.
         supertitle_pos (Tuple[float, float], optional): Relative position for titles. Defaults to (0.4, 1.3).
         xy (Optional[Tuple[Tuple[str, str, str], Tuple[str, str, str]]], optional): coord name, display name, unit. Defaults to None.
@@ -649,7 +672,7 @@ def feature_grid(
                 axs[i, j].set_title(names[i][j], size=label_size)
             else:
                 axs[i, j].set_title(
-                    names[i][j] + "  [" + units[i][j] + "]" + "    ", size=label_size
+                    names[i][j] + "  [" + units[i][j] + "]    ", size=label_size
                 )
             axs[i, j].set_xlabel("")
             axs[i, j].set_ylabel("")
@@ -666,7 +689,7 @@ def feature_grid(
             title,
             transform=axs[0, j].transAxes,
             size=label_size + 5,
-        )  # , verticalalignment='center', rotation=270)
+        )
 
     for i, title in enumerate(super_titles):
         supertitle(i, title)
@@ -676,3 +699,92 @@ def feature_grid(
         fig.suptitle(ds.time.values)
 
     return fig, axs
+
+
+
+def plot_poly_fit(
+    x_values: Sequence[Union[float, int]],
+    y_values: Sequence[Union[float, int]],
+    reg_type: Literal["lin_0", "lin", "parab", "cubic"] = "lin",
+    x_label: str = "x label",
+    y_label: str = "y label",
+    ext: float = 0.05,
+    fig_path: Optional[str] = None,
+    ax_format: Optional[Literal["both", "x", "y"]] = "both",
+) -> Tuple[unp.uarray, Callable]:
+    """
+    Plot the polynomial.
+
+    Args:
+        x_values (Sequence[Union[float, int]]): The x values to fit.
+        y_values (Sequence[Union[float, int]]): The y values to fit.
+        reg_type (str, optional): Which regression to do. Defaults to "lin".
+        x_label (str, optional): X label for plot. e.g.
+            r"$\\Delta \\bar{T}_s$ over tropical pacific (pac) region [$\\Delta$ K]"
+        y_label (str): Y labelsfor plot. e.g.
+            r"$\\Delta \\bar{T}_s$ over nino3.4 region [$\\Delta$ K]"
+        ext: how far in percentage terms to extend beyond data.
+        fig_path (Optional[str], optional): Path to stor the figure in.
+            Defaults to None.
+        ax_format (Literal["both", "x", "y"], optional): which axes to format
+            in scientific notation. Defaults to "both".
+
+    Returns:
+        Tuple[unp.uarray, Callable]: Paramaters with uncertainty,
+            function to put data into.
+
+    Example::
+        >>> from sithom.plot import plot_poly_fit as plot
+        >>> param, func = plot(
+        ...                    [-0.1, 0.5, 1.0, 1.5, 2.3, 2.9, 3.5],
+        ...                    [-0.7, 0.1, 0.3, 1.1, 1.5, 2.3, 2.2]
+        ...                   )
+        >>> "({:.3f}".format(param[0].n) + ", {:.3f})".format(param[0].s)
+        '(0.842, 0.078)'
+        >>> "({:.3f}".format(param[1].n) + ", {:.3f})".format(param[1].s)
+        '(-0.424, 0.161)'
+    """
+    param, func = fit(x_values, y_values, reg_type=reg_type)
+    min_x_data = min(x_values)
+    max_x_data = max(x_values)
+    min_x_pred = min_x_data - (max_x_data - min_x_data) * ext
+    max_x_pred = max_x_data + (max_x_data - min_x_data) * ext
+    x_pred = np.linspace(min_x_pred, max_x_pred, num=50)
+    y_pred = func(x_pred)
+    y_pred_n = unp.nominal_values(y_pred)
+    y_pred_s = unp.std_devs(y_pred)
+    if len(param) == 1:
+        param = list(param)
+        param.append(ufloat(0, 0))
+    label = label_poly(param)
+    plt.fill_between(
+        x_pred, y_pred_n + y_pred_s, y_pred_n - y_pred_s, alpha=0.5, color=CAM_BLUE
+    )
+    plt.plot(x_pred, y_pred_n, label=label, color=BRICK_RED, alpha=0.7)
+    plt.scatter(x_values, y_values, color=OX_BLUE, alpha=0.7)
+
+    if ax_format is not None:
+        plt.gca().ticklabel_format(
+            axis=ax_format, style="sci", scilimits=(0, 0), useMathText=True
+        )
+
+    if len(param) >= 3:
+        plt.legend(
+            bbox_to_anchor=(-0.15, 1.02, 1.15, 0.102),
+            loc="lower left",
+            mode="expand",
+        )
+    else:
+        plt.legend()
+
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.xlim(min_x_pred, max_x_pred)
+    plt.tight_layout()
+
+    if fig_path is not None:
+        plt.savefig(fig_path)
+    if not in_notebook:
+        plt.clf()
+
+    return param, func

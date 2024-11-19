@@ -1,0 +1,1 @@
+"""Use this module to create animations using the plot module repeatedly."""
