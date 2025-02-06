@@ -58,7 +58,6 @@ from .misc import in_notebook
 from .curve import fit, label_poly
 
 
-
 REPORT_WIDTH: float = 398.3386  # in pixels
 # Constants from SVM
 # Standard color list
@@ -176,7 +175,8 @@ def plot_defaults(use_tex: Optional[bool] = None, dpi: Optional[int] = None) -> 
 # pylint: disable=too-many-arguments
 def label_subplots(
     axs: Sequence[matplotlib.axes.Axes],
-    labels: Sequence[str] = [chr(ord("a") + z) for z in range(0, 26)] + [chr(ord("A") + z) for z in range(0, 26)],
+    labels: Sequence[str] = [chr(ord("a") + z) for z in range(0, 26)]
+    + [chr(ord("A") + z) for z in range(0, 26)],
     start_from: int = 0,
     fontsize: int = 10,
     x_pos: float = 0.02,
@@ -407,7 +407,7 @@ def axis_formatter() -> matplotlib.ticker.ScalarFormatter:
 
     fit_obj = matplotlib.ticker.ScalarFormatter(useMathText=True)
     fit_obj.set_scientific(True)
-    fit_obj.set_powerlimits((0, 0))
+    fit_obj.set_powerlimits((-1, 4))
 
     return fit_obj
 
@@ -469,12 +469,13 @@ def lim(
     return (float(vmin), float(vmax))
 
 
-def _pairplot_ds(ds: xr.Dataset, 
-                 vars: Optional[List[str]] = False, 
-                 label: bool = False,
-                 ) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
+def _pairplot_ds(
+    ds: xr.Dataset,
+    vars: Optional[List[str]] = False,
+    label: bool = False,
+) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """_pairplot_ds for xarray Dataset.
-    
+
     Args:
         ds (xr.Dataset): Dataset to plot.
         vars (Optional[List[str]], optional): Variables to plot. Defaults to False.
@@ -494,21 +495,22 @@ def _pairplot_ds(ds: xr.Dataset,
             rn_dict[var] = var
         if "units" in ds[var].attrs:
             rn_dict[var] += " [" + ds[var].attrs["units"] + "]"
-            
+
     df = ds.rename(rn_dict).to_dataframe()[list(rn_dict.values())]
     return pairplot(df, label=label)
 
 
-def pairplot(inp: Union[xr.Dataset, pd.DataFrame], 
-             vars: Optional[List[str]] = None, 
-             label: bool = False
-             ) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
+def pairplot(
+    inp: Union[xr.Dataset, pd.DataFrame],
+    vars: Optional[List[str]] = None,
+    label: bool = False,
+) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """
     Improved seaborn pairplot from:
 
     https://stackoverflow.com/a/50835066
 
-    The lower triangle of the pairplot shows the scatter plots with the 
+    The lower triangle of the pairplot shows the scatter plots with the
     correlation coefficient annotated in the top middle of each subplot.
     The diagonal shows the distribution of each of the variables.
     The upper triangle is empty.
@@ -544,7 +546,7 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
         corr_coeff = corr[0, 1]
         ax = ax or plt.gca()
         ax.annotate(f"ρ = {corr_coeff:.2f}", xy=(0.35, 1.0), xycoords=ax.transAxes)
-    
+
     # let's also work out the linear regression coefficient using the curve fit
 
     def gradfunc(x, y, ax=None, **kws) -> None:
@@ -560,9 +562,13 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
         yrange = np.max(yt) - np.min(yt)
         xt = (xt - np.min(xt)) / xrange * 10
         yt = (yt - np.min(yt)) / yrange * 10
-        param, _ = fit(xt, yt) # defaults to y=mx+c fit
+        param, _ = fit(xt, yt)  # defaults to y=mx+c fit
         ax = ax or plt.gca()
-        ax.annotate("$m={:.2eL}$".format(param[0]*yrange/xrange), xy=(0.35, 0.01), xycoords=ax.transAxes)
+        ax.annotate(
+            "$m={:.2eL}$".format(param[0] * yrange / xrange),
+            xy=(0.35, 0.01),
+            xycoords=ax.transAxes,
+        )
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
@@ -575,11 +581,12 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
 
     i = -1
     j = -1
+
     def get_ax_diag(x, ax=None, **kws) -> None:
         nonlocal i
         nonlocal j
         nonlocal ax_list
-        i += 1 
+        i += 1
         j += 1 + i
         ax = ax or plt.gca()
         ax_list.insert(j, ax)
@@ -699,7 +706,6 @@ def feature_grid(
         fig.suptitle(ds.time.values)
 
     return fig, axs
-
 
 
 def plot_poly_fit(
