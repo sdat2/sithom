@@ -500,25 +500,24 @@ def _pairplot_ds(
     return pairplot(df, label=label)
 
 
-
 def _float_to_latex(x, precision=2):
     """
     Convert a float x to a LaTeX-formatted string with the given number of significant figures.
-    
+
     Args:
         x (float): The number to format.
         precision (int): Number of significant figures (default is 2).
-    
+
     Returns:
         str: A string like "2.2\\times10^{-6}" or "3.1" (if no exponent is needed).
     """
     # Handle the special case of zero.
     if x == 0:
         return "0"
-    
+
     # Format the number using general format which automatically uses scientific notation when needed.
     s = f"{x:.{precision}g}"
-    
+
     # If scientific notation is used, s will contain an 'e'
     if "e" in s:
         mantissa, exp = s.split("e")
@@ -532,10 +531,11 @@ def _float_to_latex(x, precision=2):
         return f"{s}"
 
 
-def pairplot(inp: Union[xr.Dataset, pd.DataFrame], 
-             vars: Optional[List[str]] = None, 
-             label: bool = False
-             ) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
+def pairplot(
+    inp: Union[xr.Dataset, pd.DataFrame],
+    vars: Optional[List[str]] = None,
+    label: bool = False,
+) -> Tuple[matplotlib.figure.Figure, np.ndarray]:
     """
     Improved seaborn pairplot from:
 
@@ -595,17 +595,25 @@ def pairplot(inp: Union[xr.Dataset, pd.DataFrame],
         xt = (xt - np.min(xt)) / xrange * 10
         yt = (yt - np.min(yt)) / yrange * 10
         # fit the data with linear fit using OLS
-        param, _ = fit(xt, yt) # defaults to y=mx+c fit
+        param, _ = fit(xt, yt)  # defaults to y=mx+c fit
         ax = ax or plt.gca()
         # check if uncertainty is infinite or nan
         if param[0].s in (np.nan, np.inf, -np.inf):
             print(param[0], yrange, xrange)
             if param[0].n not in (np.nan, np.inf, -np.inf):
                 m = param[0].n
-                ax.annotate("$m={:}$".format(_float_to_latex(m*yrange/xrange)), xy=(0.35, 0.01), xycoords=ax.transAxes)
+                ax.annotate(
+                    "$m={:}$".format(_float_to_latex(m * yrange / xrange)),
+                    xy=(0.35, 0.01),
+                    xycoords=ax.transAxes,
+                )
 
         else:
-            ax.annotate("$m={:.2eL}$".format(param[0]*yrange/xrange), xy=(0.15, 0.01), xycoords=ax.transAxes)
+            ax.annotate(
+                "$m={:.2eL}$".format(param[0] * yrange / xrange),
+                xy=(0.15, 0.01),
+                xycoords=ax.transAxes,
+            )
 
     g = sns.pairplot(df, corner=True)
     g.map_lower(corrfunc)
